@@ -1,0 +1,64 @@
+<div class="fixed z-50 inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center">
+  <div class="p-6 w-96 bg-white rounded">
+    <div class="text-2xl text-center">
+      <span>ระบบเติมเงิน</span>
+    </div>
+
+    <div class="flex flex-wrap justify-center items-center gap-4 mt-5">
+      @for (amount of topupAmounts; track amount) {
+      <label
+        class="p-5 rounded-xl border cursor-pointer transition-colors duration-200"
+        [class.bg-blue-500]="selectedAmount() === amount"
+        [class.text-white]="selectedAmount() === amount"
+        [class.border-blue-500]="selectedAmount() === amount"
+        [class.bg-white]="selectedAmount() !== amount"
+        [class.text-gray-800]="selectedAmount() !== amount"
+        [class.border-gray-300]="selectedAmount() !== amount"
+      >
+        <input
+          type="radio"
+          name="amount"
+          [value]="amount"
+          [(ngModel)]="selectedAmount"
+          class="hidden"
+        />
+        {{ amount }}
+      </label>
+      }
+
+      <!-- custom amount -->
+      <label
+        class="p-5 rounded-xl border cursor-text flex items-center"
+        [class.bg-blue-500]="selectedAmount() === customAmount()"
+        [class.text-white]="selectedAmount() === customAmount()"
+        [class.border-blue-500]="selectedAmount() === customAmount()"
+        [class.bg-white]="selectedAmount() !== customAmount()"
+        [class.text-gray-800]="selectedAmount() !== customAmount()"
+        [class.border-gray-300]="selectedAmount() !== customAmount()"
+      >
+        <input
+          type="radio"
+          name="amount"
+          [value]="customAmount"
+          [(ngModel)]="selectedAmount"
+          class="hidden"
+        />
+        <input
+          type="number"
+          min="1"
+          placeholder="อื่นๆ"
+          class="w-20 bg-transparent outline-none text-center"
+          [(ngModel)]="customAmount"
+          (focus)="selectedAmount = customAmount"
+          name="customAmount"
+        />
+      </label>
+
+    </div>
+
+    <div class="flex justify-end mt-10 gap-3">
+      <button class="btn btn-ghost" (click)="topupService.toggleTopupModal()">ยกเลิก</button>
+      <button class="btn btn-primary" (click)="handleOnSubmit()">ยืนยัน</button>
+    </div>
+  </div>
+</div>

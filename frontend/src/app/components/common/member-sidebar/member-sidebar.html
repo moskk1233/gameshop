@@ -1,0 +1,143 @@
+<div class="flex h-screen">
+  <div
+    [class.w-64]="isExpanded()"
+    [class.w-16]="!isExpanded()"
+    class="bg-gray-800 text-white transition-all duration-300 flex flex-col overflow-hidden overflow-y-auto"
+  >
+    @if (isExpanded()) {
+    <div
+      class="font-bold text-4xl text-nowrap text-center m-5 p-2 rounded-2xl hover:bg-gray-600"
+    >
+      <a href="/">
+        <span>Game Shop</span>
+      </a>
+    </div>
+    }
+
+    <button
+      (click)="toggleSidebar()"
+      class="p-2 m-2 bg-gray-700 rounded hover:bg-gray-600"
+    >
+      {{ isExpanded() ? "«" : "»" }}
+    </button>
+
+    <nav class="flex-1 mt-2">
+      <ul>
+        @if (userService.isLogin()) {
+        <li
+          class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+        >
+          <lucide-icon [img]="UserIcon"></lucide-icon>
+          <span
+            class="transition-opacity text-nowrap"
+            [class.opacity-100]="isExpanded()"
+            [class.opacity-0]="!isExpanded()"
+          >
+            {{ userService.getProfile().username }}
+          </span>
+        </li>
+        <li
+          class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+        >
+          <lucide-icon [img]="CoinsIcon"></lucide-icon>
+          <span
+            class="transition-opacity text-nowrap"
+            [class.opacity-100]="isExpanded()"
+            [class.opacity-0]="!isExpanded()"
+          >
+            {{ userService.getProfile().wallet | number }} บาท
+          </span>
+        </li>
+        <li
+          class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+        >
+          <lucide-icon [img]="Gamepad2Icon"></lucide-icon>
+          <span
+            class="transition-opacity text-nowrap"
+            [class.opacity-100]="isExpanded()"
+            [class.opacity-0]="!isExpanded()"
+          >
+            คลังเกม
+          </span>
+        </li>
+
+        <button class="w-full mt-2" (click)="topupService.toggleTopupModal()">
+          <li
+            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+          >
+            <lucide-icon [img]="WalletIcon"></lucide-icon>
+            <span
+              class="transition-opacity text-nowrap"
+              [class.opacity-100]="isExpanded()"
+              [class.opacity-0]="!isExpanded()"
+            >
+              เติมเงิน
+            </span>
+          </li>
+        </button>
+        <button class="w-full mt-2">
+          <li
+            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+          >
+            <lucide-icon [img]="ScanBarcodeIcon"></lucide-icon>
+            <span
+              class="transition-opacity text-nowrap"
+              [class.opacity-100]="isExpanded()"
+              [class.opacity-0]="!isExpanded()"
+            >
+              ประวัติการสั่งซื้อ
+            </span>
+          </li>
+        </button>
+        } @else {
+        <button class="w-full" (click)="userService.login()">
+          <li
+            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+          >
+            <lucide-icon [img]="UserIcon"></lucide-icon>
+            <span
+              class="transition-opacity text-nowrap"
+              [class.opacity-100]="isExpanded()"
+              [class.opacity-0]="!isExpanded()"
+            >
+              เข้าสู่ระบบ
+            </span>
+          </li>
+        </button>
+        }
+
+        <hr class="m-3" />
+        <a
+          href="/"
+          class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+        >
+          <lucide-icon [img]="HouseIcon"></lucide-icon>
+          <span
+            class="transition-opacity text-nowrap"
+            [class.opacity-100]="isExpanded()"
+            [class.opacity-0]="!isExpanded()"
+          >
+            หน้าหลัก
+          </span>
+        </a>
+
+        @if (userService.isLogin()) {
+        <button class="w-full mt-2" (click)="userService.logout()">
+          <li
+            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+          >
+            <lucide-icon [img]="LogOutIcon"></lucide-icon>
+            <span
+              class="transition-opacity text-nowrap"
+              [class.opacity-100]="isExpanded()"
+              [class.opacity-0]="!isExpanded()"
+            >
+              ออกจากระบบ
+            </span>
+          </li>
+        </button>
+        }
+      </ul>
+    </nav>
+  </div>
+</div>

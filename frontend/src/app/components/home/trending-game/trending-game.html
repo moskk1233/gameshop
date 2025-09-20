@@ -1,0 +1,27 @@
+<div class="rounded overflow-hidden shadow-2xl">
+  <div class="p-2 bg-amber-400 text-3xl font-bold">
+    <span>เกมขายดียอดนิยม</span>
+  </div>
+
+  <div class="shadow p-5 relative">
+    <button
+      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black text-white p-2 rounded-full shadow"
+      (click)="scrollLeft()"
+    >
+      <lucide-angular [img]="StepBackIcon"></lucide-angular>
+    </button>
+    <button
+      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black text-white p-2 rounded-full shadow"
+      (click)="scrollRight()"
+    >
+      <lucide-angular [img]="StepForwardIcon"></lucide-angular>
+    </button>
+
+    <div
+      #carousel
+      class="flex overflow-hidden scroll-smooth gap-5 scrollbar-none px-10"
+    >
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

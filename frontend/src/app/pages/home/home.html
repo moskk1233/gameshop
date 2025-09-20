@@ -1,0 +1,31 @@
+@if (topupService.isTopupModalOpen()) {
+  <app-topup-modal (onSubmit)="onTopupSubmit($event)"></app-topup-modal>
+}
+
+<div>
+  <section>
+    <app-trending-game>
+      @for (game of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
+      <app-game-card></app-game-card>
+      }
+    </app-trending-game>
+  </section>
+
+  <section class="mt-10">
+    <div class="rounded overflow-auto shadow-2xl">
+      <div class="p-2 bg-amber-400 text-3xl font-bold">
+        <span>เกมทั้งหมด</span>
+      </div>
+
+      <div class="shadow p-5 relative">
+        <div
+          class="flex flex-wrap scroll-smooth gap-2 scrollbar-none px-10"
+        >
+          @for (game of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
+          <app-game-card></app-game-card>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
