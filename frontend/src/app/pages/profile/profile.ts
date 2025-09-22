@@ -7,10 +7,11 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import Swal from 'sweetalert2';
+import { PasswordInput } from "../../components/common/password-input/password-input";
 
 @Component({
   selector: 'app-profile',
-  imports: [LucideAngularModule],
+  imports: [LucideAngularModule, PasswordInput],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -57,7 +58,7 @@ export class Profile implements OnInit {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: 'ระบบไม่รองรับไฟล์ประเภทนี้',
-        icon: 'error'
+        icon: 'error',
       });
       input.value = '';
       return;
@@ -67,12 +68,12 @@ export class Profile implements OnInit {
 
     reader.onload = () => {
       this.previewImage.set(reader.result!.toString());
-    }
+    };
 
     reader.readAsDataURL(file);
-  }
+  };
 
   ngOnInit(): void {
-      this.currentImage.set('/profile.webp');
+    this.currentImage.set('/profile.webp');
   }
 }
