@@ -1,0 +1,13 @@
+<div class="w-full h-full p-10 shadow-2xl rounded-2xl">
+  <div class="w-[50%] mb-10">
+    <input type="text" class="input w-full" placeholder="ค้นหาชื่อเกม" />
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-5">
+    @for (game of gameService.getGames() | async; track game.id) {
+      <div class="w-28 shrink-0">
+        <app-libary-game-card [gameTitle]="game.name" [thumbnail]="game.coverImage" />
+      </div>
+    }
+  </div>
+</div>

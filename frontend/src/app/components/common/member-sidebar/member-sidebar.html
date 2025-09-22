@@ -39,6 +39,7 @@
               </span>
             </li>
           </button>
+
           <li
             class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
           >
@@ -51,18 +52,25 @@
               {{ userService.getProfile().wallet | number }} บาท
             </span>
           </li>
-          <li
-            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+
+          <button
+            routerLink="/library"
+            class="w-full mt-2"
           >
-            <lucide-icon [img]="Gamepad2Icon"></lucide-icon>
-            <span
-              class="transition-opacity text-nowrap"
-              [class.opacity-100]="isExpanded()"
-              [class.opacity-0]="!isExpanded()"
+            <li
+              routerLinkActive="bg-gray-900"
+              class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
             >
-              คลังเกม
-            </span>
-          </li>
+              <lucide-icon [img]="Gamepad2Icon"></lucide-icon>
+              <span
+                class="transition-opacity text-nowrap"
+                [class.opacity-100]="isExpanded()"
+                [class.opacity-0]="!isExpanded()"
+              >
+                คลังเกม
+              </span>
+            </li>
+          </button>
 
           <button class="w-full mt-2" (click)="topupService.toggleTopupModal()">
             <li
@@ -78,6 +86,7 @@
               </span>
             </li>
           </button>
+
           <button class="w-full mt-2">
             <li
               class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
@@ -92,7 +101,9 @@
               </span>
             </li>
           </button>
+
           <hr class="m-3" />
+
           <button routerLink="/" class="w-full">
             <li
               routerLinkActive="bg-gray-900"

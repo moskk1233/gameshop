@@ -1,0 +1,56 @@
+<div class="mb-5">
+  <button class="btn btn-warning" (click)="handleBackClick()">
+    <lucide-icon [img]="ArrowLeftIcon" />
+    ย้อนกลับ
+  </button>
+</div>
+
+<div class="w-full flex shadow-2xl p-5 rounded-2xl">
+  <div class="w-[60%] p-6">
+    <div class="mb-3">
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">ชื่อเกม</legend>
+        <input type="text" value="Delta Force" class="input w-full" disabled />
+      </fieldset>
+    </div>
+    <div class="mb-3 flex gap-5 w-full">
+      <div class="w-full">
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">ประเภท</legend>
+          <input type="text" value="FPS" class="input w-full" disabled />
+        </fieldset>
+      </div>
+      <div class="w-full">
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">ราคา</legend>
+          <input
+            type="text"
+            [value]="1499 | number"
+            class="input w-full"
+            disabled
+          />
+        </fieldset>
+      </div>
+    </div>
+    <div class="mb-3">
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">รายละเอียด</legend>
+        <textarea class="textarea w-full" disabled>
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta cupiditate enim ratione porro pariatur amet libero vero numquam ad neque repudiandae beatae blanditiis, recusandae dignissimos debitis aperiam magnam dolorem deserunt.</textarea
+        >
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="flex-1 p-10 flex flex-col gap-5">
+    <div class="flex justify-center w-full">
+      <div class="rounded-2xl max-w-52 max-h-52 overflow-hidden">
+        <img class="w-full" src="/game.jpg" alt="Preview" />
+      </div>
+    </div>
+    <div>
+      <span>วางขายเมื่อ: </span>
+      <span>12 กันยายน 2568</span>
+    </div>
+  </div>
+</div>
