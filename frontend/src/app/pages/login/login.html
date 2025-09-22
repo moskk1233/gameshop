@@ -1,0 +1,35 @@
+<div class="flex h-full justify-center items-center">
+  <div class="p-4 rounded-2xl shadow-2xl w-sm">
+    <div class="w-full flex flex-col text-center text-2xl mb-6">
+      <span>Game Shop</span>
+      <span>ยินดีต้อนรับ</span>
+    </div>
+
+    <div class="mx-4 flex flex-col gap-2 mb-8">
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">ชื่อผู้ใช้งาน</legend>
+          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" />
+        </fieldset>
+      </div>
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">รหัสผ่าน</legend>
+          <input type="password" class="input" placeholder="กรอกรหัสผ่าน" />
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="mx-4 mb-6">
+      <button class="btn btn-primary w-full" (click)="handleLoginSubmit()">
+        <lucide-icon [img]="LogInIcon"></lucide-icon>
+        เข้าสู่ระบบ
+      </button>
+    </div>
+
+    <div class="flex gap-2 justify-center items-center">
+      <span>ยังไม่เป็นสมาชิก ?</span>
+      <a routerLink="/register" class="text-blue-500">สมัครสมาชิกเลย</a>
+    </div>
+  </div>
+</div>

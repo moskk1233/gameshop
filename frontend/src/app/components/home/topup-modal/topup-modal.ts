@@ -7,12 +7,12 @@ import Swal from 'sweetalert2';
   selector: 'app-topup-modal',
   imports: [FormsModule],
   templateUrl: './topup-modal.html',
-  styleUrl: './topup-modal.css'
+  styleUrl: './topup-modal.css',
 })
 export class TopupModal {
   topupService = inject(TopupService);
 
-  onSubmit = output<number>();
+  submitClicked = output<number>();
 
   topupAmounts = [100, 200, 500];
 
@@ -21,18 +21,18 @@ export class TopupModal {
 
   selectAmount = (amount: number) => {
     this.selectedAmount.set(amount);
-  }
+  };
 
   handleOnSubmit = () => {
     if (!this.selectedAmount()) {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: 'กรุณาเลือกจำนวนเงินที่ต้องการเติม',
-        icon: 'error'
+        icon: 'error',
       });
       return;
     }
 
-    this.onSubmit.emit(this.selectedAmount()!);
-  }
+    this.submitClicked.emit(this.selectedAmount()!);
+  };
 }

@@ -1,0 +1,71 @@
+<div class="flex h-full justify-center items-center">
+  <div class="p-4 rounded-2xl shadow-2xl w-sm">
+    <div class="w-full flex flex-col text-center text-2xl mb-6">
+      <span>Game Shop</span>
+      <span>ยินดีต้อนรับ</span>
+    </div>
+
+    <div class="mx-4 flex flex-col gap-2 mb-8">
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">
+            <div>
+              <span>ชื่อผู้ใช้งาน</span>
+              <span class="text-error">*</span>
+            </div>
+          </legend>
+          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" />
+        </fieldset>
+      </div>
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">
+            <div>
+              <span>อีเมล</span>
+              <span class="text-error">*</span>
+            </div>
+          </legend>
+          <input type="email" class="input" placeholder="กรอกอีเมล" />
+        </fieldset>
+      </div>
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">
+            <div>
+              <span>รหัสผ่าน</span>
+              <span class="text-error">*</span>
+            </div>
+          </legend>
+          <input type="password" class="input" placeholder="กรอกรหัสผ่าน" />
+        </fieldset>
+      </div>
+      <div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">
+            <div>
+              <span>ยืนยันรหัสผ่าน</span>
+              <span class="text-error">*</span>
+            </div>
+          </legend>
+          <input
+            type="password"
+            class="input"
+            placeholder="กรอกยืนยันรหัสผ่าน"
+          />
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="mx-4 mb-6">
+      <button class="btn btn-primary w-full">
+        <lucide-icon [img]="UserPlusIcon"></lucide-icon>
+        สมัครสมาชิก
+      </button>
+    </div>
+
+    <div class="flex gap-2 justify-center items-center">
+      <span>เป็นสมาชิกอยู่แล้ว ?</span>
+      <a routerLink="/login" class="text-blue-500">เข้าสู่ระบบเลย</a>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
   selector: 'app-game-card',
   imports: [],
   templateUrl: './game-card.html',
-  styleUrl: './game-card.css'
+  styleUrl: './game-card.css',
 })
 export class GameCard {
   thumbnail = input.required<string>();

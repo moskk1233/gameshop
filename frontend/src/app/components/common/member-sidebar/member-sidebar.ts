@@ -10,12 +10,13 @@ import {
   Gamepad2Icon,
   ScanBarcodeIcon,
   UserPlusIcon,
+  LogInIcon,
   LucideAngularModule,
 } from 'lucide-angular';
 import { UserService } from '../../../services/user.service';
 import { DecimalPipe } from '@angular/common';
 import { TopupService } from '../../../services/topup.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-member-sidebar',
@@ -26,6 +27,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class MemberSidebar {
   readonly FileIcon = FileIcon;
   readonly LogOutIcon = LogOutIcon;
+  readonly LogInIcon = LogInIcon;
   readonly UserIcon = UserIcon;
   readonly SettingsIcon = SettingsIcon;
   readonly HouseIcon = HouseIcon;
@@ -37,10 +39,16 @@ export class MemberSidebar {
 
   userService = inject(UserService);
   topupService = inject(TopupService);
+  router = inject(Router);
 
   isExpanded = signal(true);
 
   toggleSidebar = () => {
     this.isExpanded.set(!this.isExpanded());
-  }
+  };
+
+  handleLogout = () => {
+    this.userService.logout();
+    this.router.navigate(['login']);
+  };
 }

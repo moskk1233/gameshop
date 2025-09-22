@@ -1,17 +1,17 @@
 @if (topupService.isTopupModalOpen()) {
-<app-topup-modal (onSubmit)="onTopupSubmit($event)"></app-topup-modal>
+  <app-topup-modal (submitClicked)="onTopupSubmit($event)"></app-topup-modal>
 }
 
 <div>
   <section>
     <app-trending-game>
       @for (game of gameService.getTrendingGames() | async; track $index) {
-      <div class="w-40 shrink-0">
-        <app-game-card
-          [gameTitle]="game.name"
-          [thumbnail]="game.coverImage"
-        ></app-game-card>
-      </div>
+        <div class="w-40 shrink-0">
+          <app-game-card
+            [gameTitle]="game.name"
+            [thumbnail]="game.coverImage"
+          ></app-game-card>
+        </div>
       }
     </app-trending-game>
   </section>
@@ -51,12 +51,12 @@
       <div class="shadow p-5">
         <div class="flex justify-center flex-wrap gap-5 px-10">
           @for (game of gameService.getGames() | async; track $index) {
-          <div class="w-32">
-            <app-game-card
-              [gameTitle]="game.name"
-              [thumbnail]="game.coverImage"
-            ></app-game-card>
-          </div>
+            <div class="w-32">
+              <app-game-card
+                [gameTitle]="game.name"
+                [thumbnail]="game.coverImage"
+              ></app-game-card>
+            </div>
           }
         </div>
       </div>

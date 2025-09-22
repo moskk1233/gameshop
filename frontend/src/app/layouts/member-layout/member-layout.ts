@@ -8,5 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './member-layout.html',
   styleUrl: './member-layout.css',
 })
-export class MemberLayout {
-}
+export class MemberLayout {}

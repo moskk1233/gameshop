@@ -1,19 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { TrendingGame } from "../../components/home/trending-game/trending-game";
-import { GameCard } from "../../components/home/game-card/game-card";
-import { TopupModal } from "../../components/home/topup-modal/topup-modal";
+import { TrendingGame } from '../../components/home/trending-game/trending-game';
+import { GameCard } from '../../components/home/game-card/game-card';
+import { TopupModal } from '../../components/home/topup-modal/topup-modal';
 import { TopupService } from '../../services/topup.service';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
 import { GameService } from '../../services/game.service';
 import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   imports: [TrendingGame, GameCard, TopupModal, AsyncPipe],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.css',
 })
 export class Home {
   topupService = inject(TopupService);
@@ -26,7 +25,7 @@ export class Home {
     Swal.fire({
       title: 'สำเร็จ',
       text: 'เติมเงินสำเร็จ',
-      icon: 'success'
+      icon: 'success',
     });
-  }
+  };
 }
