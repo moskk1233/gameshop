@@ -1,10 +1,10 @@
-<div>
-  <div class="w-52">
+<div class="hover:cursor-pointer hover:scale-105 transition">
+  <div class="w-full">
     <div class="rounded-3xl w-full overflow-hidden">
-      <img class="w-full" src="/game.jpg" alt="Delta Force" />
+      <img class="w-full" [src]="thumbnail()" [alt]="gameTitle()" draggable="false" />
     </div>
     <div class="text-center">
-      <span>Delta force</span>
+      <span>{{ gameTitle() }}</span>
     </div>
   </div>
 </div>

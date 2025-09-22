@@ -1,10 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { GameCard } from "../game-card/game-card";
 import { StepBackIcon, StepForwardIcon, LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-trending-game',
-  imports: [GameCard, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './trending-game.html',
   styleUrl: './trending-game.css'
 })

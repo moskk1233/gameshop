@@ -1,28 +1,62 @@
 @if (topupService.isTopupModalOpen()) {
-  <app-topup-modal (onSubmit)="onTopupSubmit($event)"></app-topup-modal>
+<app-topup-modal (onSubmit)="onTopupSubmit($event)"></app-topup-modal>
 }
 
 <div>
   <section>
     <app-trending-game>
-      @for (game of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
-      <app-game-card></app-game-card>
+      @for (game of gameService.getTrendingGames() | async; track $index) {
+      <div class="w-40 shrink-0">
+        <app-game-card
+          [gameTitle]="game.name"
+          [thumbnail]="game.coverImage"
+        ></app-game-card>
+      </div>
       }
     </app-trending-game>
   </section>
 
   <section class="mt-10">
     <div class="rounded overflow-auto shadow-2xl">
-      <div class="p-2 bg-amber-400 text-3xl font-bold">
-        <span>เกมทั้งหมด</span>
+      <div class="flex justify-between p-5 bg-amber-400 text-3xl font-bold">
+        <div class="flex justify-center items-center">
+          <span>เกมทั้งหมด</span>
+        </div>
+
+        <div class="flex gap-5">
+          <div class="w-64">
+            <fieldset class="fieldset">
+              <legend class="fieldset-legend">ค้นหาชื่อเกม</legend>
+              <input
+                type="text"
+                placeholder="กรอกเพื่อค้นหาชื่อเกม"
+                class="input w-full"
+              />
+            </fieldset>
+          </div>
+          <div class="w-64">
+            <fieldset class="fieldset">
+              <legend class="fieldset-legend">ค้นหาด้วยประเภท</legend>
+              <select class="select w-full">
+                <option selected>ทั้งหมด</option>
+                <option>FPS</option>
+                <option>Soul Like</option>
+                <option>Sandbox</option>
+              </select>
+            </fieldset>
+          </div>
+        </div>
       </div>
 
-      <div class="shadow p-5 relative">
-        <div
-          class="flex flex-wrap scroll-smooth gap-2 scrollbar-none px-10"
-        >
-          @for (game of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
-          <app-game-card></app-game-card>
+      <div class="shadow p-5">
+        <div class="flex justify-center flex-wrap gap-5 px-10">
+          @for (game of gameService.getGames() | async; track $index) {
+          <div class="w-32">
+            <app-game-card
+              [gameTitle]="game.name"
+              [thumbnail]="game.coverImage"
+            ></app-game-card>
+          </div>
           }
         </div>
       </div>
