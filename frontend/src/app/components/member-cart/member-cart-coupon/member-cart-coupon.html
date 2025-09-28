@@ -28,7 +28,12 @@
 
       <div class="flex flex-col gap-3 my-5">
         <div class="flex justify-between">
-          <span>คำสั่งซื้อเกมทั้งทั้งหมด ({{ cartService.getItemCount() | number }} เกม)</span>
+          <span
+            >คำสั่งซื้อเกมทั้งทั้งหมด ({{
+              cartService.getItemCount() | number
+            }}
+            เกม)</span
+          >
           <span>{{ cartService.getTotalPrice() | number }} บาท</span>
         </div>
 

@@ -15,7 +15,10 @@
   </div>
 
   <div class="flex flex-col flex-1">
-    <span [routerLink]="['/games', game().id]" class="text-2xl font-bold mb-1 hover:cursor-pointer">
+    <span
+      [routerLink]="['/games', game().id]"
+      class="text-2xl font-bold mb-1 hover:cursor-pointer"
+    >
       {{ game().name }}
     </span>
     <span class="text-sm mb-3">{{ game().type }}</span>

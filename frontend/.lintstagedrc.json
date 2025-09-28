@@ -1,0 +1,10 @@
+{
+  "*/**/*.{js,jsx,ts,tsx,html}": [
+      "prettier --write",
+      "ng lint --fix",
+      "ng lint"
+  ],
+  "*/**/*.{json,css,md}": [
+      "prettier --write"
+  ]
+}

@@ -18,6 +18,7 @@ import { UserService } from '../../../services/user.service';
 import { DecimalPipe } from '@angular/common';
 import { TopupService } from '../../../services/topup.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-member-sidebar',
@@ -41,6 +42,7 @@ export class MemberSidebar {
 
   userService = inject(UserService);
   topupService = inject(TopupService);
+  cartService = inject(CartService);
   router = inject(Router);
 
   isExpanded = signal(true);

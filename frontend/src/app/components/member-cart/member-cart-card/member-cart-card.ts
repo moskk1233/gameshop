@@ -22,5 +22,5 @@ export class MemberCartCard {
 
   onDeleted = () => {
     this.deleted.emit(this.game().id);
-  }
+  };
 }

@@ -89,7 +89,14 @@
               routerLinkActive="bg-gray-900"
               class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
             >
-              <lucide-icon [img]="ShoppingCartIcon"></lucide-icon>
+              <div class="relative">
+                <div
+                  class="absolute -right-2 -top-1 bg-red-500 min-w-3 min-h-3 text-white text-xs font-bold flex items-center justify-center rounded-full"
+                >
+                  {{ cartService.getItemCount() }}
+                </div>
+                <lucide-icon [img]="ShoppingCartIcon"></lucide-icon>
+              </div>
               <span
                 class="transition-opacity text-nowrap"
                 [class.opacity-100]="isExpanded()"
