@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserPlusIcon, LucideAngularModule, XIcon } from 'lucide-angular';
-import { PasswordInput } from '../../components/common/password-input/password-input';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { PasswordInput } from '../../../components/common/password-input/password-input';
 
 @Component({
   selector: 'app-register',

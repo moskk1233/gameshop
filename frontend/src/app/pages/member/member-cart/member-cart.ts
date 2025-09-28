@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MemberCartCard } from '../../components/member-cart/member-cart-card/member-cart-card';
-import { CartService } from '../../services/cart.service';
+import { MemberCartCard } from '../../../components/member-cart/member-cart-card/member-cart-card';
+import { CartService } from '../../../services/cart.service';
 import { LucideAngularModule, TicketIcon } from 'lucide-angular';
-import { MemberCartCoupon } from '../../components/member-cart/member-cart-coupon/member-cart-coupon';
+import { MemberCartCoupon } from '../../../components/member-cart/member-cart-coupon/member-cart-coupon';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

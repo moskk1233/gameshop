@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { GameCard } from '../../components/game-library/game-card/game-card';
-import { GameService } from '../../services/game.service';
+import { GameCard } from '../../../components/game-library/game-card/game-card';
+import { GameService } from '../../../services/game.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

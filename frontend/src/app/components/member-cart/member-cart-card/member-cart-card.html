@@ -9,6 +9,7 @@
           [src]="game().coverImage"
           (load)="imageLoaded.set(true)"
           [class.hidden]="!imageLoaded()"
+          [alt]="game().name"
         />
       </div>
     </div>
@@ -31,8 +32,10 @@
     <div>
       <span class="text-xl">{{ game().price | number }} บาท</span>
     </div>
-    <div class="text-red-500 hover:cursor-pointer" (click)="onDeleted()">
-      <lucide-icon [img]="TrashIcon"></lucide-icon>
+    <div class="text-red-500 hover:cursor-pointer">
+      <button (click)="onDeleted()">
+        <lucide-icon [img]="TrashIcon"></lucide-icon>
+      </button>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { TrendingGame } from '../../components/home/trending-game/trending-game';
-import { GameCard } from '../../components/home/game-card/game-card';
-import { GameService } from '../../services/game.service';
+import { TrendingGame } from '../../../components/home/trending-game/trending-game';
+import { GameCard } from '../../../components/home/game-card/game-card';
+import { GameService } from '../../../services/game.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

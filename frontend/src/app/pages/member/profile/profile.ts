@@ -7,7 +7,7 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import Swal from 'sweetalert2';
-import { PasswordInput } from '../../components/common/password-input/password-input';
+import { PasswordInput } from '../../../components/common/password-input/password-input';
 
 @Component({
   selector: 'app-profile',
