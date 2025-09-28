@@ -1,0 +1,59 @@
+@if (modalService.isCreateGameCategoryModalOpen()) {
+  <app-create-modal
+    (categorySubmit)="onCategoryCreate($event)"
+  ></app-create-modal>
+}
+
+@if (modalService.isEditGameCategoryModalOpen()) {
+  <app-edit-modal
+    [id]="gameCategory()!.id"
+    [(name)]="gameCategory()!.name"
+    (categorySubmit)="onCategoryEditSubmit(gameCategory()!.id, gameCategory()!.name)"
+  ></app-edit-modal>
+}
+
+<app-admin-header name="หน้าจัดการประเภทเกม"></app-admin-header>
+
+<div class="p-10">
+  <div class="flex justify-end mb-5">
+    <button
+      class="btn btn-primary"
+      (click)="modalService.isCreateGameCategoryModalOpen.set(true)"
+    >
+      <lucide-icon [img]="PlusIcon"></lucide-icon>
+      เพิ่มประเภทเกม
+    </button>
+  </div>
+
+  <div class="flex">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ชื่อประเภท</th>
+          <th>จัดการ</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (category of gameCategories$ | async; track category.id) {
+          <tr class="hover:bg-gray-200">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ category.name }}</td>
+            <td class="flex gap-3 justify-center">
+              <button
+                class="text-error hover:cursor-pointer"
+                (click)="onCategoryDelete(category.id)"
+              >
+                <lucide-icon [img]="TrashIcon"></lucide-icon>
+              </button>
+              <button class="text-warning hover:cursor-pointer" (click)="openEditGameCategoryModal(category.id)">
+                <lucide-icon [img]="PenIcon"></lucide-icon>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

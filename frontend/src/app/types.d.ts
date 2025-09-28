@@ -7,3 +7,16 @@ export interface Game {
   coverImage: string;
   sold: number;
 }
+
+export interface GameCategory {
+  id: string;
+  name: string;
+}
+
+export interface CreateGameCategory {
+  name: string;
+}
+
+export interface UpdateGameCategory {
+  name: string;
+}

@@ -78,6 +78,10 @@ export const routes: Routes = [
       {
         path: "game-create",
         loadComponent: () => import('./pages/admin/game-create/game-create').then(m => m.GameCreate),
+      },
+      {
+        path: "category-management",
+        loadComponent: () => import('./pages/admin/category-management/category-management').then(m => m.CategoryManagement),
       }
     ]
   }
