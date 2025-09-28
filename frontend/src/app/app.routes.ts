@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/home/home';
+import { Home } from './pages/member/home/home';
 import { MemberLayout } from './layouts/member-layout/member-layout';
 
 export const routes: Routes = [
@@ -13,34 +13,34 @@ export const routes: Routes = [
       },
       {
         path: 'login',
-        loadComponent: () => import('./pages/login/login').then((m) => m.Login),
+        loadComponent: () => import('./pages/member/login/login').then((m) => m.Login),
       },
       {
         path: 'register',
         loadComponent: () =>
-          import('./pages/register/register').then((m) => m.Register),
+          import('./pages/member/register/register').then((m) => m.Register),
       },
       {
         path: 'profile',
         loadComponent: () =>
-          import('./pages/profile/profile').then((m) => m.Profile),
+          import('./pages/member/profile/profile').then((m) => m.Profile),
       },
       {
         path: 'games/:id',
         loadComponent: () =>
-          import('./pages/game-detail/game-detail').then((m) => m.GameDetail),
+          import('./pages/member/game-detail-detail').then((m) => m.GameDetail),
       },
       {
         path: 'library',
         loadComponent: () =>
-          import('./pages/game-library/game-library').then(
+          import('./pages/member/game-library/game-library').then(
             (m) => m.GameLibrary,
           ),
       },
       {
         path: 'library/:id',
         loadComponent: () =>
-          import('./pages/game-library-detail/game-library-detail').then(
+          import('./pages/member/game-library-detail/game-library-detail').then(
             (m) => m.GameLibraryDetail,
           ),
       },
@@ -48,13 +48,13 @@ export const routes: Routes = [
         path: 'history',
         loadComponent: () =>
           import(
-            './pages/member-transaction-history/member-transaction-history'
+            './pages/member/member-transaction-history/member-transaction-history'
           ).then((m) => m.MemberTransactionHistory),
       },
       {
         path: 'game-cart',
         loadComponent: () =>
-          import('./pages/member-cart/member-cart').then((m) => m.MemberCart),
+          import('./pages/member/member-cart/member-cart').then((m) => m.MemberCart),
       },
     ],
   },
