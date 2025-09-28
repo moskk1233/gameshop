@@ -70,6 +70,14 @@ export const routes: Routes = [
       {
         path: "game-management",
         loadComponent: () => import('./pages/admin/game-management/game-management').then(m => m.GameManagement),
+      },
+      {
+        path: "game-management/:id",
+        loadComponent: () => import('./pages/admin/game-management-edit/game-management-edit').then(m => m.GameManagementEdit),
+      },
+      {
+        path: "game-create",
+        loadComponent: () => import('./pages/admin/game-create/game-create').then(m => m.GameCreate),
       }
     ]
   }

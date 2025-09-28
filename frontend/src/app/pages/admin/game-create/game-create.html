@@ -1,0 +1,87 @@
+<app-admin-header name="หน้าจัดการเกม"></app-admin-header>
+
+<div class="p-5">
+  <div class="w-full flex shadow-2xl p-5 rounded-2xl">
+    <div class="w-[60%] p-6">
+      <div class="mb-3">
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">ชื่อเกม</legend>
+          <input
+            type="text"
+            class="input w-full"
+            placeholder="กรอกชื่อเกม"
+            [(ngModel)]="newGame().name"
+          />
+        </fieldset>
+        {{ newGame().name }}
+      </div>
+      <div class="mb-3 flex gap-5 w-full">
+        <div class="w-full">
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">ประเภท</legend>
+            <input
+              type="text"
+              class="input w-full"
+              placeholder="เลือกประเภทของเกม"
+            />
+          </fieldset>
+        </div>
+        <div class="w-full">
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">ราคา</legend>
+            <input
+              type="number"
+              min="0"
+              class="input w-full"
+              placeholder="กรอกราคาเกม"
+              [(ngModel)]="newGame().price"
+            />
+          </fieldset>
+        </div>
+      </div>
+      <div class="mb-3">
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">รายละเอียด</legend>
+          <textarea
+            class="textarea w-full"
+            placeholder="กรอกรายละเอียดของตัวเกม"
+            [(ngModel)]="newGame().description"
+          ></textarea>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="flex-1 p-10 flex flex-col gap-5">
+      <div class="flex justify-center w-full">
+        <div class="rounded-2xl max-w-52 max-h-52 overflow-hidden">
+          <label for="coverImage">
+            @if (!previewImage()) {
+              <div class="w-52 h-52 skeleton"></div>
+            } @else {
+              <img class="w-full" [src]="previewImage()" alt="Preview" />
+            }
+          </label>
+          <input
+            type="file"
+            id="coverImage"
+            class="file-input"
+            (change)="onImageAttachmentChange($event)"
+            accept="image/jpeg, image/png"
+            hidden
+          />
+
+        </div>
+      </div>
+
+      <div class="flex gap-5 justify-end">
+        <button class="btn btn-ghost" (click)="handleBackClick()">
+          ยกเลิก
+        </button>
+        <button class="btn btn-primary">
+          <lucide-icon [img]="SaveIcon" />
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
