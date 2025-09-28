@@ -1,3 +1,7 @@
+@if (topupService.isTopupModalOpen()) {
+  <app-topup-modal (submitClicked)="onTopupSubmit($event)"></app-topup-modal>
+}
+
 <div class="flex">
   <div>
     <app-member-sidebar></app-member-sidebar>
