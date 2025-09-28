@@ -28,7 +28,7 @@ export const routes: Routes = [
       {
         path: 'games/:id',
         loadComponent: () =>
-          import('./pages/member/game-detail-detail').then((m) => m.GameDetail),
+          import('./pages/member/game-detail/game-detail').then((m) => m.GameDetail),
       },
       {
         path: 'library',
