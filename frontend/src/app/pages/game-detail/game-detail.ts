@@ -1,6 +1,5 @@
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   ArrowLeftIcon,
   LucideAngularModule,
@@ -17,9 +16,9 @@ export class GameDetail {
   readonly ArrowLeftIcon = ArrowLeftIcon;
   readonly ShoppingCartIcon = ShoppingCartIcon;
 
-  private router = inject(Router);
+  private location = inject(Location);
 
   handleBackClick = () => {
-    this.router.navigate(['/']);
+    this.location.back();
   };
 }
