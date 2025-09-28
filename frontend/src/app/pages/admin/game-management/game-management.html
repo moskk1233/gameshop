@@ -1,0 +1,28 @@
+<app-admin-header name="หน้าจัดการเกม"></app-admin-header>
+
+<div class="flex flex-col p-10">
+  <div class="w-full flex justify-end mb-5">
+    <button class="btn btn-primary">
+      <lucide-icon [img]=PlusIcon></lucide-icon>
+      เพิ่มเกม
+    </button>
+  </div>
+
+  <div class="flex flex-col bg-white shadow-2xl p-10 rounded-2xl">
+    <div class="flex mb-10">
+      <input type="text" class="input" placeholder="ค้นหาชื่อเกม" />
+    </div>
+
+    <div class="flex flex-wrap gap-5 justify-center">
+      @for (game of gameService.getGames() | async; track game.id) {
+        <div class="shrink-0 grow-0 w-32">
+          <app-game-management-card
+            id="1"
+            gameTitle="Delta Force"
+            thumbnail="/game.jpg"
+          ></app-game-management-card>
+        </div>
+      }
+    </div>
+  </div>
+</div>

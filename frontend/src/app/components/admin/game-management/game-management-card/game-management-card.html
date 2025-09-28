@@ -1,0 +1,18 @@
+<div
+  [routerLink]="['/game-management', id()]"
+  class="hover:cursor-pointer hover:scale-105 transition"
+>
+  <div class="w-full">
+    <div class="rounded-3xl w-full overflow-hidden">
+      <img
+        class="w-full"
+        [src]="thumbnail()"
+        [alt]="gameTitle()"
+        draggable="false"
+      />
+    </div>
+    <div class="text-center">
+      <span>{{ gameTitle() }}</span>
+    </div>
+  </div>
+</div>

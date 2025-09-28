@@ -66,6 +66,10 @@ export const routes: Routes = [
       {
         path: "",
         loadComponent: () => import('./pages/admin/home/home').then(m => m.Home),
+      },
+      {
+        path: "game-management",
+        loadComponent: () => import('./pages/admin/game-management/game-management').then(m => m.GameManagement),
       }
     ]
   }
