@@ -31,7 +31,7 @@ export const appConfig: ApplicationConfig = {
         apiKey: 'fake-api-key',
         authDomain: 'localhost',
         projectId: 'project-gameshop-4cc9c',
-        storageBucket: 'your-project-id.appspot.com',
+        storageBucket: 'project-gameshop-4cc9c.firebasestorage.app',
         messagingSenderId: '1234567890',
         appId: 'fake-app-id',
       }),

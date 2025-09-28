@@ -10,22 +10,22 @@
         <fieldset class="fieldset">
           <legend class="fieldset-legend">
             <div>
-              <span>ชื่อผู้ใช้งาน</span>
+              <span>อีเมล</span>
               <span class="text-error">*</span>
             </div>
           </legend>
-          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" />
+          <input type="email" class="input" placeholder="กรอกอีเมล" [(ngModel)]="email" />
         </fieldset>
       </div>
       <div>
         <fieldset class="fieldset">
           <legend class="fieldset-legend">
             <div>
-              <span>อีเมล</span>
+              <span>ชื่อผู้ใช้งาน</span>
               <span class="text-error">*</span>
             </div>
           </legend>
-          <input type="email" class="input" placeholder="กรอกอีเมล" />
+          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" [(ngModel)]="username" />
         </fieldset>
       </div>
       <div>
@@ -36,7 +36,7 @@
               <span class="text-error">*</span>
             </div>
           </legend>
-          <app-password-input placeholder="กรอกรหัสผ่าน" />
+          <app-password-input placeholder="กรอกรหัสผ่าน" [(value)]="password" />
         </fieldset>
       </div>
       <div>
@@ -47,7 +47,7 @@
               <span class="text-error">*</span>
             </div>
           </legend>
-          <app-password-input placeholder="กรอกรหัสยืนยันรหัสผ่าน" />
+          <app-password-input placeholder="กรอกรหัสยืนยันรหัสผ่าน" [(value)]="confirmPassword" />
         </fieldset>
       </div>
       <div>
@@ -90,7 +90,7 @@
     </div>
 
     <div class="mx-4 mb-6">
-      <button class="btn btn-primary w-full">
+      <button class="btn btn-primary w-full" (click)="onRegisterSubmit()">
         <lucide-icon [img]="UserPlusIcon"></lucide-icon>
         สมัครสมาชิก
       </button>
