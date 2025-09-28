@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-libary-game-card',
   imports: [RouterLink],
   templateUrl: './game-card.html',
-  styleUrl: './game-card.css'
+  styleUrl: './game-card.css',
 })
 export class GameCard {
   thumbnail = input.required<string>();

@@ -6,7 +6,10 @@
   <div class="flex flex-wrap justify-center gap-5">
     @for (game of gameService.getGames() | async; track game.id) {
       <div class="w-28 shrink-0">
-        <app-libary-game-card [gameTitle]="game.name" [thumbnail]="game.coverImage" />
+        <app-libary-game-card
+          [gameTitle]="game.name"
+          [thumbnail]="game.coverImage"
+        />
       </div>
     }
   </div>

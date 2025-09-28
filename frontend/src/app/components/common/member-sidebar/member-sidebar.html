@@ -53,10 +53,7 @@
             </span>
           </li>
 
-          <button
-            routerLink="/library"
-            class="w-full mt-2"
-          >
+          <button routerLink="/library" class="w-full mt-2">
             <li
               routerLinkActive="bg-gray-900"
               class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
@@ -87,8 +84,9 @@
             </li>
           </button>
 
-          <button class="w-full mt-2">
+          <button routerLink="/history" class="w-full mt-2">
             <li
+              routerLinkActive="bg-gray-900"
               class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
             >
               <lucide-icon [img]="ScanBarcodeIcon"></lucide-icon>

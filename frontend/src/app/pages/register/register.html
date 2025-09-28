@@ -64,7 +64,10 @@
                 <div class="skeleton w-32 h-32 rounded-2xl"></div>
               } @else {
                 <div class="relative">
-                  <button (click)="handleRemoveImage()" class="absolute flex -right-3 -top-3 p-1 bg-red-500 rounded-full">
+                  <button
+                    (click)="handleRemoveImage()"
+                    class="absolute flex -right-3 -top-3 p-1 bg-red-500 rounded-full"
+                  >
                     <lucide-icon [img]="XIcon"></lucide-icon>
                   </button>
                   <div class="overflow-hidden max-w-32 max-h-32 rounded-2xl">

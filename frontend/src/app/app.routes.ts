@@ -33,7 +33,9 @@ export const routes: Routes = [
       {
         path: 'library',
         loadComponent: () =>
-          import('./pages/game-library/game-library').then((m) => m.GameLibrary),
+          import('./pages/game-library/game-library').then(
+            (m) => m.GameLibrary,
+          ),
       },
       {
         path: 'library/:id',
@@ -41,6 +43,13 @@ export const routes: Routes = [
           import('./pages/game-library-detail/game-library-detail').then(
             (m) => m.GameLibraryDetail,
           ),
+      },
+      {
+        path: 'history',
+        loadComponent: () =>
+          import(
+            './pages/member-transaction-history/member-transaction-history'
+          ).then((m) => m.MemberTransactionHistory),
       },
     ],
   },

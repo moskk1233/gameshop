@@ -7,7 +7,7 @@ import { ArrowLeftIcon, LucideAngularModule } from 'lucide-angular';
   selector: 'app-game-library-detail',
   imports: [LucideAngularModule, DecimalPipe],
   templateUrl: './game-library-detail.html',
-  styleUrl: './game-library-detail.css'
+  styleUrl: './game-library-detail.css',
 })
 export class GameLibraryDetail {
   readonly ArrowLeftIcon = ArrowLeftIcon;
@@ -16,5 +16,5 @@ export class GameLibraryDetail {
 
   handleBackClick = () => {
     this.router.navigate(['/library']);
-  }
+  };
 }
