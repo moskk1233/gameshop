@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/member/home/home';
 import { MemberLayout } from './layouts/member-layout/member-layout';
+import { AdminLayout } from './layouts/admin-layout/admin-layout';
 
 export const routes: Routes = [
   {
@@ -58,4 +59,14 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: "admin",
+    component: AdminLayout,
+    children: [
+      {
+        path: "",
+        loadComponent: () => import('./pages/admin/home/home').then(m => m.Home),
+      }
+    ]
+  }
 ];
