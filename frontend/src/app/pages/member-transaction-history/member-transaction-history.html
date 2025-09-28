@@ -1,7 +1,9 @@
 <div class="p-5 w-full">
-  <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+  <div
+    class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+  >
     <table class="table">
-      <thead >
+      <thead>
         <tr>
           <th>ID</th>
           <th>ชื่อเกม</th>
@@ -10,7 +12,12 @@
       </thead>
 
       <tbody>
-        @for (item of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
+        @for (
+          item of [
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          ];
+          track $index
+        ) {
           <tr class="hover:bg-gray-100">
             <td>1</td>
             <td>Delta Force</td>

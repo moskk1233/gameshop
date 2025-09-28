@@ -84,6 +84,22 @@
             </li>
           </button>
 
+          <button routerLink="/game-cart" class="w-full mt-2">
+            <li
+              routerLinkActive="bg-gray-900"
+              class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+            >
+              <lucide-icon [img]="ShoppingCartIcon"></lucide-icon>
+              <span
+                class="transition-opacity text-nowrap"
+                [class.opacity-100]="isExpanded()"
+                [class.opacity-0]="!isExpanded()"
+              >
+                ตะกร้าเกม
+              </span>
+            </li>
+          </button>
+
           <button routerLink="/history" class="w-full mt-2">
             <li
               routerLinkActive="bg-gray-900"

@@ -11,6 +11,7 @@ import {
   ScanBarcodeIcon,
   UserPlusIcon,
   LogInIcon,
+  ShoppingCartIcon,
   LucideAngularModule,
 } from 'lucide-angular';
 import { UserService } from '../../../services/user.service';
@@ -36,6 +37,7 @@ export class MemberSidebar {
   readonly Gamepad2Icon = Gamepad2Icon;
   readonly ScanBarcodeIcon = ScanBarcodeIcon;
   readonly UserPlusIcon = UserPlusIcon;
+  readonly ShoppingCartIcon = ShoppingCartIcon;
 
   userService = inject(UserService);
   topupService = inject(TopupService);

@@ -1,0 +1,51 @@
+<div class="flex flex-col gap-10">
+  <div class="p-5 flex flex-col gap-2 rounded shadow-md">
+    <div class="flex gap-2">
+      <lucide-icon [img]="TicketIcon"></lucide-icon>
+      <span class="text-xl">โค้ดส่วนลด</span>
+    </div>
+
+    <div class="flex gap-2">
+      <div class="w-full">
+        <input type="text" class="input" placeholder="กรอกโค้ดส่วนลด" />
+      </div>
+
+      <button class="btn btn-primary">ใช้งาน</button>
+    </div>
+  </div>
+
+  <div class="p-5 flex flex-col gap-2 rounded shadow-md">
+    <div class="flex flex-col">
+      <div class="flex gap-2 mb-5">
+        <lucide-icon [img]="ReceiptTextIcon"></lucide-icon>
+        <span class="text-xl font-bold">สรุปคำสั่งซื้อ</span>
+      </div>
+      <div class="flex justify-between">
+        <span>ยอดรวมสุทธิทั้งหมด:</span>
+        <span>{{ cartService.getTotalPrice() | number }} บาท</span>
+      </div>
+      <hr />
+
+      <div class="flex flex-col gap-3 my-5">
+        <div class="flex justify-between">
+          <span>คำสั่งซื้อเกมทั้งทั้งหมด ({{ cartService.getItemCount() | number }} เกม)</span>
+          <span>{{ cartService.getTotalPrice() | number }} บาท</span>
+        </div>
+
+        <div class="flex justify-between text-xs">
+          <span>โค้ดส่วนลด</span>
+          <span class="text-red-400">{{ 200 | number }} บาท</span>
+        </div>
+
+        <div class="flex justify-between">
+          <span>ยอดรวมสุทธิหลังหักส้วนลด</span>
+          <span>{{ 1000 | number }} บาท</span>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <button class="btn btn-primary w-[80%]">สั่งซื้อ</button>
+      </div>
+    </div>
+  </div>
+</div>

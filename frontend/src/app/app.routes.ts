@@ -51,6 +51,11 @@ export const routes: Routes = [
             './pages/member-transaction-history/member-transaction-history'
           ).then((m) => m.MemberTransactionHistory),
       },
+      {
+        path: 'game-cart',
+        loadComponent: () =>
+          import('./pages/member-cart/member-cart').then((m) => m.MemberCart),
+      },
     ],
   },
 ];
