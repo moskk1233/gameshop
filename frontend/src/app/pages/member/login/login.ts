@@ -4,8 +4,14 @@ import { LogInIcon, LucideAngularModule } from 'lucide-angular';
 import { UserService } from '../../../services/user.service';
 import { PasswordInput } from '../../../components/common/password-input/password-input';
 import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import Swal from 'sweetalert2';
+import { catchError, of, switchMap, tap } from 'rxjs';
 
 interface LoginForm {
   email: FormControl<string | null>;
@@ -14,7 +20,12 @@ interface LoginForm {
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, LucideAngularModule, PasswordInput, ReactiveFormsModule],
+  imports: [
+    RouterLink,
+    LucideAngularModule,
+    PasswordInput,
+    ReactiveFormsModule,
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -35,7 +46,7 @@ export class Login {
     }),
   });
 
-  async handleLoginSubmit() {
+  handleLoginSubmit() {
     this.loginForm.markAllAsTouched();
 
     if (this.loginForm.invalid) return;
@@ -51,31 +62,31 @@ export class Login {
       },
     });
 
-    try {
-      const response = await this.authService.login(
-        formValue.email!,
-        formValue.password!
-      );
-      const userProfile$ = this.userService.getProfile(response.user.uid);
-
-      Swal.close();
-      userProfile$.subscribe(profile => {
-        if (profile?.role === 'member') {
-          this.router.navigate(['/']);
-        } else {
-          this.router.navigate(['/admin']);
+    this.authService
+      .login(formValue.email!, formValue.password!)
+      .pipe(
+        switchMap((response) => this.userService.getProfile(response.user.uid)),
+        tap(() => Swal.close()),
+        catchError((e: unknown) => {
+          if (e instanceof Error) {
+            Swal.fire({
+              title: 'เกิดข้อผิดพลาด',
+              text: e.message,
+              icon: 'error',
+            });
+          }
+          return of(null);
+        }),
+      )
+      .subscribe((profile) => {
+        if (profile) {
+          if (profile.role === 'member') {
+            this.router.navigate(['/']);
+          } else {
+            this.router.navigate(['/admin']);
+          }
         }
-      })
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        await Swal.fire({
-          title: 'เกิดข้อผิดพลาด',
-          text: e.message,
-          icon: 'error'
-        });
-      }
-    }
-
+      });
   }
 
   isFieldInvalid(fieldName: keyof LoginForm) {

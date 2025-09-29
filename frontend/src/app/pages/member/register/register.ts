@@ -184,31 +184,32 @@ export class Register {
       },
     });
 
-    const response = await this.authService.register(
-      formValue.email!,
-      formValue.password!,
-      formValue.username!,
-      formValue.profileFile!,
-    );
-
-    if (response.success) {
-      await Swal.fire({
-        title: 'สมัครสมาชิกสำเร็จ!',
-        text: 'ยินดีต้อนรับเข้าสู่ระบบ',
-        icon: 'success',
-        timer: 2000,
-        showConfirmButton: false,
+    this.authService
+      .register(
+        formValue.email!,
+        formValue.password!,
+        formValue.username!,
+        formValue.profileFile!,
+      )
+      .subscribe((response) => {
+        if (response.success) {
+          Swal.fire({
+            title: 'สมัครสมาชิกสำเร็จ!',
+            text: 'ยินดีต้อนรับเข้าสู่ระบบ',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+          this.router.navigate(['/']);
+        } else {
+          Swal.fire({
+            title: 'เกิดข้อผิดพลาด',
+            text: 'กรุณาลองอีกครั้งภายหลัง',
+            icon: 'error',
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
       });
-      this.router.navigate(['/']);
-    } else {
-      await Swal.fire({
-        title: 'เกิดข้อผิดพลาด',
-        text: 'กรุณาลองอีกครั้งภายหลัง',
-        icon: 'error',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-    }
-
   }
 }
