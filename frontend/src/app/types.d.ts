@@ -26,6 +26,6 @@ export interface AppUser {
   email: string;
   username: string
   profileUrl: string;
-  role: 'user' | 'admin';
+  role: 'member' | 'admin';
   wallet: number;
 }

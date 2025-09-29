@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FileIcon,
   LogOutIcon,
@@ -15,7 +15,7 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import { UserService } from '../../../services/user.service';
-import { DecimalPipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 import { TopupService } from '../../../services/topup.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
@@ -23,7 +23,13 @@ import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-member-sidebar',
-  imports: [LucideAngularModule, DecimalPipe, RouterLink, RouterLinkActive],
+  imports: [
+    LucideAngularModule,
+    DecimalPipe,
+    RouterLink,
+    RouterLinkActive,
+    AsyncPipe
+  ],
   templateUrl: './member-sidebar.html',
   styleUrl: './member-sidebar.css',
 })
@@ -49,16 +55,12 @@ export class MemberSidebar {
 
   isExpanded = signal(true);
 
-  isLoggedIn = computed(() => this.authService.currentUser() !== null);
-
-  currentUser = computed(() => this.authService.currentUser());
-
   toggleSidebar = () => {
     this.isExpanded.set(!this.isExpanded());
   };
 
   handleLogout = () => {
     this.authService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['/login']);
   };
 }

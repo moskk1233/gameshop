@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { AppUser } from '../types';
+import { from, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,12 @@ export class UserService {
     this.isLogin.set(false);
   }
 
-  async getProfile(uid: string) {
+  getProfile(uid: string): Observable<AppUser | null> {
     const ref = doc(this.fireStore, 'users', uid);
-    const snap = await getDoc(ref);
-    if (!snap.exists()) return null;
 
-    return { id: snap.id, ...snap.data() } as AppUser;
+    return from(getDoc(ref))
+    .pipe(
+      map(snap => snap.exists() ? { id: snap.id, ...snap.data() } : null)
+    ) as Observable<AppUser | null>;
   }
 }

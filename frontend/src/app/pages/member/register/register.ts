@@ -199,7 +199,7 @@ export class Register {
         timer: 2000,
         showConfirmButton: false,
       });
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     } else {
       await Swal.fire({
         title: 'เกิดข้อผิดพลาด',

@@ -1,7 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Gamepad2Icon, LogOutIcon, LucideAngularModule, ScanBarcodeIcon, TicketIcon, UserIcon } from 'lucide-angular';
 import { UserService } from '../../../services/user.service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -17,8 +19,14 @@ export class AdminSidebar {
   readonly ScanBarcodeIcon = ScanBarcodeIcon;
 
   userService = inject(UserService);
+  authService = inject(AuthService);
+
+  router = inject(Router);
+
+  currentUser = toSignal(this.authService.currentUser$);
 
   handleLogout = () => {
-    this.userService.logout();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

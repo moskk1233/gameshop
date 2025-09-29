@@ -23,7 +23,7 @@
 
     <nav class="flex-1 mt-2">
       <ul>
-        @if (isLoggedIn()) {
+        @if (authService.currentUser$ | async; as user) {
           <button routerLink="/profile" class="w-full">
             <li
               routerLinkActive="bg-gray-900"
@@ -35,7 +35,7 @@
                 [class.opacity-100]="isExpanded()"
                 [class.opacity-0]="!isExpanded()"
               >
-                {{ currentUser()?.username }}
+                {{ user.username }}
               </span>
             </li>
           </button>
@@ -49,7 +49,7 @@
               [class.opacity-100]="isExpanded()"
               [class.opacity-0]="!isExpanded()"
             >
-              {{ currentUser()?.wallet | number }} บาท
+              {{ user.wallet | number }} บาท
             </span>
           </li>
 

@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/member/home/home';
 import { MemberLayout } from './layouts/member-layout/member-layout';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
+import { authGuard } from './guards/auth-guard';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -9,12 +10,9 @@ export const routes: Routes = [
     component: MemberLayout,
     children: [
       {
-        path: '',
-        component: Home,
-      },
-      {
         path: 'login',
-        loadComponent: () => import('./pages/member/login/login').then((m) => m.Login),
+        loadComponent: () =>
+          import('./pages/member/login/login').then((m) => m.Login),
       },
       {
         path: 'register',
@@ -22,67 +20,96 @@ export const routes: Routes = [
           import('./pages/member/register/register').then((m) => m.Register),
       },
       {
-        path: 'profile',
-        loadComponent: () =>
-          import('./pages/member/profile/profile').then((m) => m.Profile),
-      },
-      {
-        path: 'games/:id',
-        loadComponent: () =>
-          import('./pages/member/game-detail/game-detail').then((m) => m.GameDetail),
-      },
-      {
-        path: 'library',
-        loadComponent: () =>
-          import('./pages/member/game-library/game-library').then(
-            (m) => m.GameLibrary,
-          ),
-      },
-      {
-        path: 'library/:id',
-        loadComponent: () =>
-          import('./pages/member/game-library-detail/game-library-detail').then(
-            (m) => m.GameLibraryDetail,
-          ),
-      },
-      {
-        path: 'history',
-        loadComponent: () =>
-          import(
-            './pages/member/member-transaction-history/member-transaction-history'
-          ).then((m) => m.MemberTransactionHistory),
-      },
-      {
-        path: 'game-cart',
-        loadComponent: () =>
-          import('./pages/member/member-cart/member-cart').then((m) => m.MemberCart),
+        path: '',
+        canActivateChild: [authGuard],
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/member/home/home').then((m) => m.Home),
+          },
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./pages/member/profile/profile').then((m) => m.Profile),
+          },
+          {
+            path: 'games/:id',
+            loadComponent: () =>
+              import('./pages/member/game-detail/game-detail').then(
+                (m) => m.GameDetail,
+              ),
+          },
+          {
+            path: 'library',
+            loadComponent: () =>
+              import('./pages/member/game-library/game-library').then(
+                (m) => m.GameLibrary,
+              ),
+          },
+          {
+            path: 'library/:id',
+            loadComponent: () =>
+              import(
+                './pages/member/game-library-detail/game-library-detail'
+              ).then((m) => m.GameLibraryDetail),
+          },
+          {
+            path: 'history',
+            loadComponent: () =>
+              import(
+                './pages/member/member-transaction-history/member-transaction-history'
+              ).then((m) => m.MemberTransactionHistory),
+          },
+          {
+            path: 'game-cart',
+            loadComponent: () =>
+              import('./pages/member/member-cart/member-cart').then(
+                (m) => m.MemberCart,
+              ),
+          },
+        ],
       },
     ],
   },
   {
-    path: "admin",
+    path: 'admin',
     component: AdminLayout,
+    canActivateChild: [authGuard, adminGuard],
     children: [
       {
-        path: "",
-        loadComponent: () => import('./pages/admin/home/home').then(m => m.Home),
+        path: '',
+        loadComponent: () =>
+          import('./pages/admin/home/home').then((m) => m.Home),
       },
       {
-        path: "game-management",
-        loadComponent: () => import('./pages/admin/game-management/game-management').then(m => m.GameManagement),
+        path: 'game-management',
+        loadComponent: () =>
+          import('./pages/admin/game-management/game-management').then(
+            (m) => m.GameManagement,
+          ),
       },
       {
-        path: "game-management/:id",
-        loadComponent: () => import('./pages/admin/game-management-edit/game-management-edit').then(m => m.GameManagementEdit),
+        path: 'game-management/:id',
+        loadComponent: () =>
+          import(
+            './pages/admin/game-management-edit/game-management-edit'
+          ).then((m) => m.GameManagementEdit),
       },
       {
-        path: "game-create",
-        loadComponent: () => import('./pages/admin/game-create/game-create').then(m => m.GameCreate),
+        path: 'game-create',
+        loadComponent: () =>
+          import('./pages/admin/game-create/game-create').then(
+            (m) => m.GameCreate,
+          ),
       },
       {
-        path: "category-management",
-        loadComponent: () => import('./pages/admin/category-management/category-management').then(m => m.CategoryManagement),
-      }
-    ]
-  }
+        path: 'category-management',
+        loadComponent: () =>
+          import('./pages/admin/category-management/category-management').then(
+            (m) => m.CategoryManagement,
+          ),
+      },
+    ],
+  },
 ];

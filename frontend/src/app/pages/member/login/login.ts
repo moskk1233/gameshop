@@ -52,13 +52,20 @@ export class Login {
     });
 
     try {
-      await this.authService.login(
+      const response = await this.authService.login(
         formValue.email!,
         formValue.password!
       );
-      Swal.close();
+      const userProfile$ = this.userService.getProfile(response.user.uid);
 
-      this.router.navigate(['/']);
+      Swal.close();
+      userProfile$.subscribe(profile => {
+        if (profile?.role === 'member') {
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/admin']);
+        }
+      })
     } catch (e: unknown) {
       if (e instanceof Error) {
         await Swal.fire({
