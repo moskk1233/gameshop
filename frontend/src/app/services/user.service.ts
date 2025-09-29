@@ -1,4 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { AppUser } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,8 @@ export class UserService {
   };
   isLogin = signal(false);
 
+  fireStore = inject(Firestore);
+
   login() {
     this.isLogin.set(true);
   }
@@ -18,7 +22,11 @@ export class UserService {
     this.isLogin.set(false);
   }
 
-  getProfile() {
-    return this.userProfile;
+  async getProfile(uid: string) {
+    const ref = doc(this.fireStore, 'users', uid);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return null;
+
+    return { id: snap.id, ...snap.data() } as AppUser;
   }
 }

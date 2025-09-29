@@ -5,27 +5,38 @@
       <span>ยินดีต้อนรับ</span>
     </div>
 
-    <div class="mx-4 flex flex-col gap-2 mb-8">
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">ชื่อผู้ใช้งาน</legend>
-          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" />
-        </fieldset>
+    <form [formGroup]="loginForm">
+      <div class="mx-4 flex flex-col gap-2 mb-8">
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">อีเมล</legend>
+            <input type="text" class="input" placeholder="กรอกอีเมล" formControlName="email" />
+            @if (isFieldInvalid("email")) {
+              <p class="label text-error">
+                {{ getFieldErrorMessage("email") }}
+              </p>
+            }
+          </fieldset>
+        </div>
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">รหัสผ่าน</legend>
+            <app-password-input placeholder="กรอกรหัสผ่าน" formControlName="password"></app-password-input>
+            @if (isFieldInvalid("password")) {
+              <p class="label text-error">
+                {{ getFieldErrorMessage("password") }}
+              </p>
+            }
+          </fieldset>
+        </div>
       </div>
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">รหัสผ่าน</legend>
-          <input type="password" class="input" placeholder="กรอกรหัสผ่าน" />
-        </fieldset>
+      <div class="mx-4 mb-6">
+        <button class="btn btn-primary w-full" (click)="handleLoginSubmit()">
+          <lucide-icon [img]="LogInIcon"></lucide-icon>
+          เข้าสู่ระบบ
+        </button>
       </div>
-    </div>
-
-    <div class="mx-4 mb-6">
-      <button class="btn btn-primary w-full" (click)="handleLoginSubmit()">
-        <lucide-icon [img]="LogInIcon"></lucide-icon>
-        เข้าสู่ระบบ
-      </button>
-    </div>
+    </form>
 
     <div class="flex gap-2 justify-center items-center">
       <span>ยังไม่เป็นสมาชิก ?</span>

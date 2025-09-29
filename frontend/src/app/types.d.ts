@@ -20,3 +20,12 @@ export interface CreateGameCategory {
 export interface UpdateGameCategory {
   name: string;
 }
+
+export interface AppUser {
+  id: string;
+  email: string;
+  username: string
+  profileUrl: string;
+  role: 'user' | 'admin';
+  wallet: number;
+}

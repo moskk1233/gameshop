@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FileIcon,
   LogOutIcon,
@@ -19,6 +19,7 @@ import { DecimalPipe } from '@angular/common';
 import { TopupService } from '../../../services/topup.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-member-sidebar',
@@ -43,16 +44,21 @@ export class MemberSidebar {
   userService = inject(UserService);
   topupService = inject(TopupService);
   cartService = inject(CartService);
+  authService = inject(AuthService);
   router = inject(Router);
 
   isExpanded = signal(true);
+
+  isLoggedIn = computed(() => this.authService.currentUser() !== null);
+
+  currentUser = computed(() => this.authService.currentUser());
 
   toggleSidebar = () => {
     this.isExpanded.set(!this.isExpanded());
   };
 
   handleLogout = () => {
-    this.userService.logout();
+    this.authService.logout();
     this.router.navigate(['login']);
   };
 }
