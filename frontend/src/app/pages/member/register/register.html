@@ -5,96 +5,140 @@
       <span>ยินดีต้อนรับ</span>
     </div>
 
-    <div class="mx-4 flex flex-col gap-2 mb-8">
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">
-            <div>
-              <span>อีเมล</span>
-              <span class="text-error">*</span>
-            </div>
-          </legend>
-          <input type="email" class="input" placeholder="กรอกอีเมล" [(ngModel)]="email" />
-        </fieldset>
-      </div>
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">
-            <div>
-              <span>ชื่อผู้ใช้งาน</span>
-              <span class="text-error">*</span>
-            </div>
-          </legend>
-          <input type="text" class="input" placeholder="กรอกชื่อผู้ใช้งาน" [(ngModel)]="username" />
-        </fieldset>
-      </div>
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">
-            <div>
-              <span>รหัสผ่าน</span>
-              <span class="text-error">*</span>
-            </div>
-          </legend>
-          <app-password-input placeholder="กรอกรหัสผ่าน" [(value)]="password" />
-        </fieldset>
-      </div>
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">
-            <div>
-              <span>ยืนยันรหัสผ่าน</span>
-              <span class="text-error">*</span>
-            </div>
-          </legend>
-          <app-password-input placeholder="กรอกรหัสยืนยันรหัสผ่าน" [(value)]="confirmPassword" />
-        </fieldset>
-      </div>
-      <div>
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">
-            <div>
-              <span>รูปโปรไฟล์</span>
-              <span class="text-error">*</span>
-            </div>
-          </legend>
-          <label for="coverImage">
-            <div class="flex justify-center">
-              @if (!previewImage()) {
-                <div class="skeleton w-32 h-32 rounded-2xl"></div>
-              } @else {
-                <div class="relative">
-                  <button
-                    (click)="handleRemoveImage()"
-                    class="absolute flex -right-3 -top-3 p-1 bg-red-500 rounded-full"
-                  >
-                    <lucide-icon [img]="XIcon"></lucide-icon>
-                  </button>
-                  <div class="overflow-hidden max-w-32 max-h-32 rounded-2xl">
-                    <img [src]="previewImage()" alt="" />
+    <form [formGroup]="registerGroup" (ngSubmit)="onRegisterSubmit()">
+      <div class="mx-4 flex flex-col gap-2 mb-8">
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+              <div>
+                <span>อีเมล</span>
+                <span class="text-error">*</span>
+              </div>
+            </legend>
+            <input
+              type="email"
+              class="input"
+              placeholder="กรอกอีเมล"
+              formControlName="email"
+            />
+            @if (isFieldInvalid('email')) {
+              <p class="label text-error">
+                {{ getErrorMessage('email') }}
+              </p>
+            }
+          </fieldset>
+        </div>
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+              <div>
+                <span>ชื่อผู้ใช้งาน</span>
+                <span class="text-error">*</span>
+              </div>
+            </legend>
+            <input
+              type="text"
+              class="input"
+              placeholder="กรอกชื่อผู้ใช้งาน"
+              formControlName="username"
+            />
+            @if (isFieldInvalid('username')) {
+              <p class="label text-error">
+                {{ getErrorMessage('username') }}
+              </p>
+            }
+          </fieldset>
+        </div>
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+              <div>
+                <span>รหัสผ่าน</span>
+                <span class="text-error">*</span>
+              </div>
+            </legend>
+            <app-password-input
+              placeholder="กรอกรหัสผ่าน"
+              formControlName="password"
+            />
+            @if (isFieldInvalid('password')) {
+              <p class="label text-error">
+                {{ getErrorMessage('password') }}
+              </p>
+            }
+          </fieldset>
+        </div>
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+              <div>
+                <span>ยืนยันรหัสผ่าน</span>
+                <span class="text-error">*</span>
+              </div>
+            </legend>
+            <app-password-input
+              placeholder="กรอกรหัสยืนยันรหัสผ่าน"
+              formControlName="confirmPassword"
+            />
+            @if (isFieldInvalid('confirmPassword')) {
+              <p class="label text-error">
+                {{ getErrorMessage('confirmPassword') }}
+              </p>
+            }
+          </fieldset>
+        </div>
+        <div>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">
+              <div>
+                <span>รูปโปรไฟล์</span>
+                <span class="text-error">*</span>
+              </div>
+            </legend>
+            <label for="coverImage">
+              <div class="flex justify-center">
+                @if (!previewImage()) {
+                  <div class="skeleton w-32 h-32 rounded-2xl"></div>
+                } @else {
+                  <div class="relative">
+                    <button
+                      type="button"
+                      (click)="handleRemoveImage()"
+                      class="absolute flex -right-3 -top-3 p-1 bg-red-500 rounded-full"
+                    >
+                      <lucide-icon [img]="XIcon"></lucide-icon>
+                    </button>
+                    <div class="overflow-hidden max-w-32 max-h-32 rounded-2xl">
+                      <img [src]="previewImage()" alt="" />
+                    </div>
                   </div>
-                </div>
-              }
-            </div>
-          </label>
-          <input
-            type="file"
-            id="coverImage"
-            class="file-input"
-            (change)="onImageAttachmentChange($event)"
-            accept="image/jpeg, image/png"
-            hidden
-          />
-        </fieldset>
+                }
+              </div>
+            </label>
+            <input
+              type="file"
+              id="coverImage"
+              class="file-input"
+              (change)="onImageAttachmentChange($event)"
+              accept="image/jpeg, image/png"
+              hidden
+            />
+            @if (isFieldInvalid('profileFile')) {
+              <p class="label text-error">
+                {{ getErrorMessage('profileFile') }}
+              </p>
+            }
+          </fieldset>
+        </div>
       </div>
-    </div>
 
-    <div class="mx-4 mb-6">
-      <button class="btn btn-primary w-full" (click)="onRegisterSubmit()">
-        <lucide-icon [img]="UserPlusIcon"></lucide-icon>
-        สมัครสมาชิก
-      </button>
-    </div>
+      <div class="mx-4 mb-6">
+        <button class="btn btn-primary w-full">
+          <lucide-icon [img]="UserPlusIcon"></lucide-icon>
+          สมัครสมาชิก
+        </button>
+      </div>
+    </form>
 
     <div class="flex gap-2 justify-center items-center">
       <span>เป็นสมาชิกอยู่แล้ว ?</span>
