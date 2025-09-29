@@ -7,7 +7,7 @@ export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  return authService.waitForAuthInit().pipe(
+  return authService.currentUser$.pipe(
     map(user => {
       if (user && user.role === 'admin') {
         return true;
@@ -16,5 +16,5 @@ export const adminGuard: CanActivateFn = () => {
         return false;
       }
     })
-  )
+  );
 };

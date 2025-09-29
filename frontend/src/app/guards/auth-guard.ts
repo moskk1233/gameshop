@@ -7,7 +7,7 @@ export const authGuard: CanActivateChildFn = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  return authService.waitForAuthInit().pipe(
+  return authService.currentUser$.pipe(
     map(user => {
       if (user) {
         return true;
@@ -16,5 +16,5 @@ export const authGuard: CanActivateChildFn = () => {
         return false;
       }
     })
-  )
+  );
 };

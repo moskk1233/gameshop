@@ -1,8 +1,8 @@
-import { inject, Injectable, NgZone } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Auth,
+  authState,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   UserCredential,
 } from '@angular/fire/auth';
@@ -13,13 +13,10 @@ import {
   Storage,
   uploadBytes,
 } from '@angular/fire/storage';
-import { AppUser } from '../types';
 import { UserService } from './user.service';
 import {
   BehaviorSubject,
-  filter,
   Observable,
-  take,
   from,
   switchMap,
   map,
@@ -35,14 +32,17 @@ export class AuthService {
   fireStore = inject(Firestore);
   fireStorage = inject(Storage);
 
-  ngZone = inject(NgZone);
-
   userService = inject(UserService);
 
-  private userSubject = new BehaviorSubject<AppUser | null | undefined>(
-    undefined,
+  currentUser$ = authState(this.fireAuth).pipe(
+    switchMap(cred => {
+      if (cred) {
+        return this.userService.getProfile(cred.uid);
+      } else {
+        return of(null);
+      }
+    })
   );
-  currentUser$ = this.userSubject.asObservable();
 
   private authInitialized = new BehaviorSubject<boolean>(false);
   public authInitialized$ = this.authInitialized.asObservable();
@@ -103,31 +103,5 @@ export class AuthService {
 
   logout(): Observable<void> {
     return from(this.fireAuth.signOut());
-  }
-
-  waitForAuthInit() {
-    return this.currentUser$.pipe(
-      filter((user) => user !== undefined),
-      take(1),
-    ) as Observable<AppUser | null>;
-  }
-
-  constructor() {
-    onAuthStateChanged(this.fireAuth, (user) => {
-      this.ngZone.run(() => {
-        console.log(user);
-        if (user) {
-          this.userService.getProfile(user.uid).subscribe((user) => {
-            this.userSubject.next(user);
-          });
-        } else {
-          this.userSubject.next(null);
-        }
-
-        if (!this.authInitialized.value) {
-          this.authInitialized.next(true);
-        }
-      });
-    });
   }
 }
