@@ -1,19 +1,19 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { map } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
 export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
   return authService.currentUser$.pipe(
-    map(user => {
+    switchMap(user => {
       if (user && user.role === 'admin') {
-        return true;
+        return of(true);
       } else {
         router.navigate(['/']);
-        return false;
+        return of(false);
       }
     })
   );

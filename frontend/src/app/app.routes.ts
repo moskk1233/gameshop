@@ -3,6 +3,7 @@ import { MemberLayout } from './layouts/member-layout/member-layout';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { authGuard } from './guards/auth-guard';
 import { adminGuard } from './guards/admin-guard';
+import { memberGuard } from './guards/member-guard';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        canActivateChild: [authGuard],
+        canActivateChild: [authGuard, memberGuard],
         children: [
           {
             path: '',
