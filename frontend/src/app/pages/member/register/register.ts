@@ -192,14 +192,8 @@ export class Register {
         formValue.profileFile!,
       )
       .subscribe((response) => {
+        Swal.close();
         if (response.success) {
-          Swal.fire({
-            title: 'สมัครสมาชิกสำเร็จ!',
-            text: 'ยินดีต้อนรับเข้าสู่ระบบ',
-            icon: 'success',
-            timer: 2000,
-            showConfirmButton: false,
-          });
           this.router.navigate(['/']);
         } else {
           Swal.fire({
