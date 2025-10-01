@@ -8,13 +8,13 @@ export const authGuard: CanActivateChildFn = () => {
   const authService = inject(AuthService);
 
   return authService.currentUser$.pipe(
-    switchMap(user => {
+    switchMap((user) => {
       if (user) {
         return of(true);
       } else {
         router.navigate(['/login']);
         return of(false);
       }
-    })
+    }),
   );
 };

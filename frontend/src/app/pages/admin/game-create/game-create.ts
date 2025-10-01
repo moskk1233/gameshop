@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   selector: 'app-game-create',
   imports: [AdminHeader, LucideAngularModule, FormsModule],
   templateUrl: './game-create.html',
-  styleUrl: './game-create.css'
+  styleUrl: './game-create.css',
 })
 export class GameCreate {
   readonly SaveIcon = SaveIcon;
@@ -19,15 +19,15 @@ export class GameCreate {
   previewImage = signal<string | null>(null);
 
   newGame = signal({
-    name: "",
-    type: "",
+    name: '',
+    type: '',
     price: 0,
-    description: ""
+    description: '',
   });
 
   handleBackClick = () => {
     this.location.back();
-  }
+  };
 
   onImageAttachmentChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
@@ -51,8 +51,8 @@ export class GameCreate {
 
     reader.onload = () => {
       this.previewImage.set(reader.result!.toString());
-    }
+    };
 
     reader.readAsDataURL(file);
-  }
+  };
 }

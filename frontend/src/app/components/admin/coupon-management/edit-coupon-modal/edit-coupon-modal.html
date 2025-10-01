@@ -1,0 +1,72 @@
+<form
+  (ngSubmit)="onEditSubmit()"
+  class="absolute z-50 inset-0 bg-black/50 flex justify-center items-center"
+>
+  <div class="flex flex-col p-5 rounded-2xl bg-white shadow-2xl w-[500px]">
+    <div class="flex text-3xl mb-5">
+      <span>แก้ไขส่วนลด</span>
+    </div>
+
+    <div class="flex flex-col">
+      <div class="flex flex-col mb-5">
+        <div>ID</div>
+        <div class="w-full">
+          <input type="text" class="input w-full" [value]="id()" disabled />
+        </div>
+      </div>
+
+      <div class="flex flex-col mb-5">
+        <div>โค้ดส่วนลด</div>
+        <div class="w-full">
+          <input
+            type="text"
+            class="input w-full"
+            placeholder="กรอกโค้ดส่วนลด"
+            name="code"
+            [(ngModel)]="code"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col mb-5">
+        <div>ส่วนลด</div>
+        <div class="w-full">
+          <input
+            type="number"
+            class="input w-full"
+            placeholder="กรอกส่วนลด"
+            name="discount"
+            [(ngModel)]="discount"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-col mb-5">
+        <div>จำนวนที่ใช้ได้</div>
+        <div class="w-full">
+          <input
+            type="number"
+            class="input w-full"
+            placeholder="กรอกจำนวนส่วนลดที่ใช้ได้"
+            name="limit"
+            [(ngModel)]="limit"
+          />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          class="btn btn-ghost"
+          (click)="modalService.isEditCouponModalOpen.set(false)"
+        >
+          ยกเลิก
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <lucide-icon [img]="SaveIcon"></lucide-icon>
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

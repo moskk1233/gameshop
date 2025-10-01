@@ -7,11 +7,11 @@ import { AdminHeader } from '../../../components/admin/admin-header/admin-header
   selector: 'app-game-management-edit',
   imports: [DecimalPipe, AdminHeader, LucideAngularModule],
   templateUrl: './game-management-edit.html',
-  styleUrl: './game-management-edit.css'
+  styleUrl: './game-management-edit.css',
 })
 export class GameManagementEdit {
   readonly SaveIcon = SaveIcon;
-  readonly TrashIcon =TrashIcon;
+  readonly TrashIcon = TrashIcon;
 
   location = inject(Location);
 

@@ -7,13 +7,13 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-create-modal',
   imports: [LucideAngularModule, FormsModule],
   templateUrl: './create-modal.html',
-  styleUrl: './create-modal.css'
+  styleUrl: './create-modal.css',
 })
 export class CreateModal {
   readonly SaveIcon = SaveIcon;
 
   modalService = inject(ModalService);
-  name = signal("");
+  name = signal('');
 
   categorySubmit = output<string>();
 

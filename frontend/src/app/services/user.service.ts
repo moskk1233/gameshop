@@ -24,13 +24,17 @@ export class UserService {
   topup(uid: string, amount: number) {
     const ref = doc(this.fireStore, 'users', uid);
 
-    return from(updateDoc(ref, {
-      wallet: increment(amount),
-    })).pipe(
-      switchMap(() => of({
-        success: true,
-        message: `เติมเงินสำเร็จ`
-      })),
+    return from(
+      updateDoc(ref, {
+        wallet: increment(amount),
+      }),
+    ).pipe(
+      switchMap(() =>
+        of({
+          success: true,
+          message: `เติมเงินสำเร็จ`,
+        }),
+      ),
       catchError((e) => {
         console.error(e);
         return of({

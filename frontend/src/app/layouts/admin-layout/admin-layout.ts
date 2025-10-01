@@ -6,8 +6,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-admin-layout',
   imports: [AdminSidebar, RouterOutlet],
   templateUrl: './admin-layout.html',
-  styleUrl: './admin-layout.css'
+  styleUrl: './admin-layout.css',
 })
-export class AdminLayout {
-
-}
+export class AdminLayout {}

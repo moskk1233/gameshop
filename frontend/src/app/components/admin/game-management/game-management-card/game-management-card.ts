@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-game-management-card',
   imports: [RouterLink],
   templateUrl: './game-management-card.html',
-  styleUrl: './game-management-card.css'
+  styleUrl: './game-management-card.css',
 })
 export class GameManagementCard {
   id = input.required<string>();

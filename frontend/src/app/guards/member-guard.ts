@@ -8,13 +8,13 @@ export const memberGuard: CanActivateChildFn = () => {
   const authService = inject(AuthService);
 
   return authService.currentUser$.pipe(
-    switchMap(user => {
+    switchMap((user) => {
       if (user && user.role === 'member') {
         return of(true);
       } else {
         router.navigate(['/admin']);
         return of(false);
       }
-    })
+    }),
   );
 };

@@ -28,7 +28,7 @@ import { AuthService } from '../../../services/auth.service';
     DecimalPipe,
     RouterLink,
     RouterLinkActive,
-    AsyncPipe
+    AsyncPipe,
   ],
   templateUrl: './member-sidebar.html',
   styleUrl: './member-sidebar.css',

@@ -24,8 +24,16 @@ export interface UpdateGameCategory {
 export interface AppUser {
   id: string;
   email: string;
-  username: string
+  username: string;
   profileUrl: string;
   role: 'member' | 'admin';
   wallet: number;
+}
+
+export interface Coupon {
+  id: string;
+  code: string;
+  discount: number;
+  limit: number;
+  usedCount: number;
 }

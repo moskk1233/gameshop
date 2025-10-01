@@ -21,9 +21,9 @@
               placeholder="กรอกอีเมล"
               formControlName="email"
             />
-            @if (isFieldInvalid('email')) {
+            @if (isFieldInvalid("email")) {
               <p class="label text-error">
-                {{ getErrorMessage('email') }}
+                {{ getErrorMessage("email") }}
               </p>
             }
           </fieldset>
@@ -42,9 +42,9 @@
               placeholder="กรอกชื่อผู้ใช้งาน"
               formControlName="username"
             />
-            @if (isFieldInvalid('username')) {
+            @if (isFieldInvalid("username")) {
               <p class="label text-error">
-                {{ getErrorMessage('username') }}
+                {{ getErrorMessage("username") }}
               </p>
             }
           </fieldset>
@@ -61,9 +61,9 @@
               placeholder="กรอกรหัสผ่าน"
               formControlName="password"
             />
-            @if (isFieldInvalid('password')) {
+            @if (isFieldInvalid("password")) {
               <p class="label text-error">
-                {{ getErrorMessage('password') }}
+                {{ getErrorMessage("password") }}
               </p>
             }
           </fieldset>
@@ -80,9 +80,9 @@
               placeholder="กรอกรหัสยืนยันรหัสผ่าน"
               formControlName="confirmPassword"
             />
-            @if (isFieldInvalid('confirmPassword')) {
+            @if (isFieldInvalid("confirmPassword")) {
               <p class="label text-error">
-                {{ getErrorMessage('confirmPassword') }}
+                {{ getErrorMessage("confirmPassword") }}
               </p>
             }
           </fieldset>
@@ -123,9 +123,9 @@
               accept="image/jpeg, image/png"
               hidden
             />
-            @if (isFieldInvalid('profileFile')) {
+            @if (isFieldInvalid("profileFile")) {
               <p class="label text-error">
-                {{ getErrorMessage('profileFile') }}
+                {{ getErrorMessage("profileFile") }}
               </p>
             }
           </fieldset>

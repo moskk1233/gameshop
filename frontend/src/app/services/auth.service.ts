@@ -35,13 +35,13 @@ export class AuthService {
   userService = inject(UserService);
 
   currentUser$ = authState(this.fireAuth).pipe(
-    switchMap(cred => {
+    switchMap((cred) => {
       if (cred) {
         return this.userService.getProfile(cred.uid);
       } else {
         return of(null);
       }
-    })
+    }),
   );
 
   private authInitialized = new BehaviorSubject<boolean>(false);

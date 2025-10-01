@@ -19,7 +19,10 @@
       </div>
 
       <div class="flex justify-end gap-2">
-        <button class="btn btn-ghost" (click)="modalService.isCreateGameCategoryModalOpen.set(false)">
+        <button
+          class="btn btn-ghost"
+          (click)="modalService.isCreateGameCategoryModalOpen.set(false)"
+        >
           ยกเลิก
         </button>
         <button class="btn btn-primary" (click)="onCategoryCreate()">

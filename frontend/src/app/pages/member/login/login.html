@@ -10,7 +10,12 @@
         <div>
           <fieldset class="fieldset">
             <legend class="fieldset-legend">อีเมล</legend>
-            <input type="text" class="input" placeholder="กรอกอีเมล" formControlName="email" />
+            <input
+              type="text"
+              class="input"
+              placeholder="กรอกอีเมล"
+              formControlName="email"
+            />
             @if (isFieldInvalid("email")) {
               <p class="label text-error">
                 {{ getFieldErrorMessage("email") }}
@@ -21,7 +26,10 @@
         <div>
           <fieldset class="fieldset">
             <legend class="fieldset-legend">รหัสผ่าน</legend>
-            <app-password-input placeholder="กรอกรหัสผ่าน" formControlName="password"></app-password-input>
+            <app-password-input
+              placeholder="กรอกรหัสผ่าน"
+              formControlName="password"
+            ></app-password-input>
             @if (isFieldInvalid("password")) {
               <p class="label text-error">
                 {{ getFieldErrorMessage("password") }}

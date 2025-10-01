@@ -1,0 +1,70 @@
+@if (modalService.isCreateCouponModalOpen()) {
+  <app-create-coupon-modal
+    (createCoupon)="onCreateCouponSubmit($event)"
+  ></app-create-coupon-modal>
+}
+
+@if (modalService.isEditCouponModalOpen()) {
+  <app-edit-coupon-modal
+    [id]="coupon()!.id"
+    [(code)]="coupon()!.code"
+    [(discount)]="coupon()!.discount"
+    [(limit)]="coupon()!.limit"
+    (editSubmit)="onEditCouponSubmit(coupon()!.id, coupon()!)"
+  ></app-edit-coupon-modal>
+}
+
+<app-admin-header name="หน้าจัดการคูปอง"></app-admin-header>
+
+<div class="p-10">
+  <div class="flex justify-end mb-10">
+    <button
+      class="btn btn-primary"
+      (click)="modalService.isCreateCouponModalOpen.set(true)"
+    >
+      <lucide-icon [img]="PlusIcon"></lucide-icon>
+      เพิ่มคูปอง
+    </button>
+  </div>
+
+  <div class="flex">
+    <div class="w-full">
+      <table class="table text-center">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>โค้ดส่วนลด</th>
+            <th>ส่วนลด</th>
+            <th>จำนวนที่ใช้ได้</th>
+            <th>จัดการ</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (coupon of coupons$ | async; track coupon.id) {
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ coupon.code }}</td>
+              <td>{{ coupon.discount | number }}</td>
+              <td>{{ coupon.limit | number }}</td>
+              <td class="flex gap-3 justify-center">
+                <button
+                  class="text-error hover:cursor-pointer"
+                  (click)="onCouponDelete(coupon.id)"
+                >
+                  <lucide-icon [img]="TrashIcon"></lucide-icon>
+                </button>
+                <button
+                  class="text-warning hover:cursor-pointer"
+                  (click)="openEditCouponModal(coupon.id)"
+                >
+                  <lucide-icon [img]="PenIcon"></lucide-icon>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

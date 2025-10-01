@@ -1,7 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { AdminHeader } from '../../../components/admin/admin-header/admin-header';
-import { LucideAngularModule, PenIcon, PlusIcon, TrashIcon } from 'lucide-angular';
-import { CreateModal } from "../../../components/admin/category-management/create-modal/create-modal";
+import {
+  LucideAngularModule,
+  PenIcon,
+  PlusIcon,
+  TrashIcon,
+} from 'lucide-angular';
+import { CreateModal } from '../../../components/admin/category-management/create-modal/create-modal';
 import { ModalService } from '../../../services/modal.service';
 import { GameCategoryService } from '../../../services/game-category.service';
 import Swal from 'sweetalert2';
@@ -12,9 +17,15 @@ import { EditModal } from '../../../components/admin/category-management/edit-mo
 
 @Component({
   selector: 'app-category-management',
-  imports: [AdminHeader, LucideAngularModule, CreateModal, EditModal, AsyncPipe],
+  imports: [
+    AdminHeader,
+    LucideAngularModule,
+    CreateModal,
+    EditModal,
+    AsyncPipe,
+  ],
   templateUrl: './category-management.html',
-  styleUrl: './category-management.css'
+  styleUrl: './category-management.css',
 })
 export class CategoryManagement implements OnInit {
   readonly PlusIcon = PlusIcon;
@@ -34,13 +45,13 @@ export class CategoryManagement implements OnInit {
       Swal.fire({
         title: 'สำเร็จ',
         text: response.message,
-        icon: 'success'
+        icon: 'success',
       });
     } else {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: response.message,
-        icon: 'error'
+        icon: 'error',
       });
     }
   }
@@ -62,13 +73,13 @@ export class CategoryManagement implements OnInit {
       Swal.fire({
         title: 'สำเร็จ',
         text: response.message,
-        icon: 'success'
+        icon: 'success',
       });
     } else {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: response.message,
-        icon: 'error'
+        icon: 'error',
       });
     }
   }
@@ -80,7 +91,7 @@ export class CategoryManagement implements OnInit {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: 'ไม่พบข้อมูลประเภทเกมที่จะแก้ไข',
-        icon: 'error'
+        icon: 'error',
       });
       return;
     }
@@ -89,19 +100,21 @@ export class CategoryManagement implements OnInit {
   }
 
   async onCategoryEditSubmit(id: string, name: string) {
-    const response = await this.gameCategoryService.updateCategory(id, { name });
+    const response = await this.gameCategoryService.updateCategory(id, {
+      name,
+    });
     this.modalService.isEditGameCategoryModalOpen.set(false);
     if (response.success) {
       Swal.fire({
         title: 'สำเร็จ',
         text: response.message,
-        icon: 'success'
+        icon: 'success',
       });
     } else {
       Swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: response.message,
-        icon: 'error'
+        icon: 'error',
       });
     }
   }

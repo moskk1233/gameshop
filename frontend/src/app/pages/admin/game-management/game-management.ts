@@ -8,9 +8,15 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-game-management',
-  imports: [AdminHeader, LucideAngularModule, GameManagementCard, AsyncPipe, RouterLink],
+  imports: [
+    AdminHeader,
+    LucideAngularModule,
+    GameManagementCard,
+    AsyncPipe,
+    RouterLink,
+  ],
   templateUrl: './game-management.html',
-  styleUrl: './game-management.css'
+  styleUrl: './game-management.css',
 })
 export class GameManagement {
   readonly PlusIcon = PlusIcon;

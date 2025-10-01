@@ -31,7 +31,10 @@
       </div>
 
       <div class="flex justify-end gap-2">
-        <button class="btn btn-ghost" (click)="modalService.isEditGameCategoryModalOpen.set(false)">
+        <button
+          class="btn btn-ghost"
+          (click)="modalService.isEditGameCategoryModalOpen.set(false)"
+        >
           ยกเลิก
         </button>
         <button class="btn btn-primary" (click)="onCategorySubmit()">

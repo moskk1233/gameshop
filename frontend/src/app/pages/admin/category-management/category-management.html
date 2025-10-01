@@ -8,7 +8,9 @@
   <app-edit-modal
     [id]="gameCategory()!.id"
     [(name)]="gameCategory()!.name"
-    (categorySubmit)="onCategoryEditSubmit(gameCategory()!.id, gameCategory()!.name)"
+    (categorySubmit)="
+      onCategoryEditSubmit(gameCategory()!.id, gameCategory()!.name)
+    "
   ></app-edit-modal>
 }
 
@@ -47,7 +49,10 @@
               >
                 <lucide-icon [img]="TrashIcon"></lucide-icon>
               </button>
-              <button class="text-warning hover:cursor-pointer" (click)="openEditGameCategoryModal(category.id)">
+              <button
+                class="text-warning hover:cursor-pointer"
+                (click)="openEditGameCategoryModal(category.id)"
+              >
                 <lucide-icon [img]="PenIcon"></lucide-icon>
               </button>
             </td>
