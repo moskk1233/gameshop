@@ -12,6 +12,8 @@ import {
 import Swal from 'sweetalert2';
 import { PasswordInput } from '../../../components/common/password-input/password-input';
 import { AuthService } from '../../../services/auth.service';
+import { EMPTY, switchMap, tap } from 'rxjs';
+import swal from '../../../utils/swal';
 
 interface RegisterForm {
   email: FormControl<string | null>;
@@ -191,18 +193,26 @@ export class Register {
         formValue.username!,
         formValue.profileFile!,
       )
-      .subscribe((response) => {
-        Swal.close();
-        if (response.success) {
-          this.router.navigate(['/']);
-        } else {
-          Swal.fire({
+      .pipe(
+        tap(() => swal.close()),
+        switchMap((response) => {
+          if (response.success) return this.authService.currentUser$;
+
+          swal.fire({
             title: 'เกิดข้อผิดพลาด',
             text: 'กรุณาลองอีกครั้งภายหลัง',
             icon: 'error',
             timer: 2000,
             showConfirmButton: false,
           });
+          return EMPTY;
+        }),
+      )
+      .subscribe((user) => {
+        if (user) {
+          this.router.navigate(['/']);
+        } else {
+          this.router.navigate(['/login']);
         }
       });
   }
