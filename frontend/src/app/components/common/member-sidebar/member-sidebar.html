@@ -123,6 +123,22 @@
             </li>
           </button>
 
+          <button routerLink="/topup-history" class="w-full mt-2">
+            <li
+              routerLinkActive="bg-gray-900"
+              class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+            >
+              <lucide-icon [img]="ScanBarcodeIcon"></lucide-icon>
+              <span
+                class="transition-opacity text-nowrap"
+                [class.opacity-100]="isExpanded()"
+                [class.opacity-0]="!isExpanded()"
+              >
+                ประวัติการเติมเงิน
+              </span>
+            </li>
+          </button>
+
           <hr class="m-3" />
 
           <button routerLink="/" class="w-full">

@@ -69,6 +69,13 @@ export const routes: Routes = [
                 (m) => m.MemberCart,
               ),
           },
+          {
+            path: 'topup-history',
+            loadComponent: () =>
+              import('./pages/member/topup-history/topup-history').then(
+                (m) => m.TopupHistory,
+              ),
+          },
         ],
       },
     ],

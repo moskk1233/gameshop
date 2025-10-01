@@ -1,0 +1,31 @@
+<div class="p-5 w-full">
+  <div
+    class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+  >
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>จำนวนเงิน</th>
+          <th>วันที่เติมเงิน</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (topup of userTopups$ | async ;track $index) {
+          <tr class="hover:bg-gray-100">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ topup.amount }}</td>
+            <td>{{ topup.createdAt | thaiDate }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3" class="text-center">
+              <span class="text-2xl font-bold">ยังไม่มีข้อมูลการเติมเงิน</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

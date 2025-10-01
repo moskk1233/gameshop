@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export interface Game {
   id: number;
   name: string;
@@ -36,4 +38,10 @@ export interface Coupon {
   discount: number;
   limit: number;
   usedCount: number;
+}
+
+export interface IUserTopupHistory {
+  id: string;
+  amount: number;
+  createdAt: Timestamp;
 }
