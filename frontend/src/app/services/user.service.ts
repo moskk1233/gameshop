@@ -1,13 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  collection,
   doc,
   docData,
   Firestore,
   increment,
-  updateDoc,
+  runTransaction,
 } from '@angular/fire/firestore';
 import { AppUser } from '../types';
-import { catchError, from, Observable, of, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,27 +22,33 @@ export class UserService {
     return docData(ref, { idField: 'id' }) as Observable<AppUser | null>;
   }
 
-  topup(uid: string, amount: number) {
+  async topup(uid: string, amount: number) {
     const ref = doc(this.fireStore, 'users', uid);
-
-    return from(
-      updateDoc(ref, {
-        wallet: increment(amount),
-      }),
-    ).pipe(
-      switchMap(() =>
-        of({
-          success: true,
-          message: `เติมเงินสำเร็จ`,
-        }),
-      ),
-      catchError((e) => {
-        console.error(e);
-        return of({
-          success: false,
-          message: 'ไม่สามารถเติมเงินได้กรุณาลองใหม่ภายหลัง',
-        });
-      }),
+    const userTopupRef = doc(
+      collection(this.fireStore, 'users', uid, 'topups'),
     );
+
+    try {
+      await runTransaction(this.fireStore, async (transaction) => {
+        transaction.update(ref, {
+          wallet: increment(amount),
+        });
+
+        transaction.set(userTopupRef, {
+          amount,
+          createdAt: new Date(),
+        });
+      });
+
+      return {
+        success: true,
+        message: `เติมเงินสำเร็จ`,
+      };
+    } catch {
+      return {
+        success: false,
+        message: 'ไม่สามารถเติมเงินได้กรุณาลองใหม่ภายหลัง',
+      };
+    }
   }
 }
