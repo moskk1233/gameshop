@@ -2,7 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Game } from '../types';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
-import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
+import {
+  getDownloadURL,
+  ref,
+  Storage,
+  uploadBytes,
+} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -228,7 +233,13 @@ export class GameService {
     return of(games.slice(0, 10));
   }
 
-  async createGame(name: string, type: string, description: string, price: number, image: File) {
+  async createGame(
+    name: string,
+    type: string,
+    description: string,
+    price: number,
+    image: File,
+  ) {
     try {
       const filePath = `game_image/${image.name}`;
       const storageRef = ref(this.fStorage, filePath);
@@ -243,17 +254,17 @@ export class GameService {
         description,
         price,
         sold: 0,
-        coverImage: imageUrl
+        coverImage: imageUrl,
       } as Game);
 
       return {
         success: true,
-        message: 'วางขายเกมสำเร็จ'
-      }
+        message: 'วางขายเกมสำเร็จ',
+      };
     } catch {
       return {
         success: false,
-        message: 'ไม่สามารถวางขายเกมได้กรุณาลองใหม่อีกครั้ง'
+        message: 'ไม่สามารถวางขายเกมได้กรุณาลองใหม่อีกครั้ง',
       };
     }
   }

@@ -14,7 +14,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './topup-history.css',
 })
 export class TopupHistory {
-
   topupService = inject(TopupService);
   authService = inject(AuthService);
 

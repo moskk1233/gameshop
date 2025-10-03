@@ -47,7 +47,7 @@ export class AuthService {
       }
     }),
   );
-  constructor(private auth: Auth) {}
+
   private authInitialized = new BehaviorSubject<boolean>(false);
   public authInitialized$ = this.authInitialized.asObservable();
 
@@ -108,9 +108,9 @@ export class AuthService {
   logout(): Observable<void> {
     return from(this.fireAuth.signOut());
   }
-  
+
   async changePassword(oldPassword: string, newPassword: string) {
-    const user = this.auth.currentUser;
+    const user = this.fireAuth.currentUser;
     if (!user || !user.email) throw new Error('User not found');
 
     const credential = EmailAuthProvider.credential(user.email, oldPassword);
@@ -119,34 +119,34 @@ export class AuthService {
   }
 
   async updateProfile(username: string, email: string) {
-  const user = this.auth.currentUser;
-  if (!user) throw new Error('ไม่พบผู้ใช้');
+    const user = this.fireAuth.currentUser;
+    if (!user) throw new Error('ไม่พบผู้ใช้');
 
-  if (email && user.email !== email) {
-    await updateEmail(user, email);
+    if (email && user.email !== email) {
+      await updateEmail(user, email);
+    }
+    const userDocRef = doc(this.fireStore, 'users', user.uid);
+    await updateDoc(userDocRef, { username, email });
   }
-  const userDocRef = doc(this.fireStore, 'users', user.uid);
-  await updateDoc(userDocRef, { username, email });
-}
 
-async updateProfileImage(file: File): Promise<string> {
-  const user = this.auth.currentUser;
-  if (!user) throw new Error('ไม่พบผู้ใช้');
+  async updateProfileImage(file: File): Promise<string> {
+    const user = this.fireAuth.currentUser;
+    if (!user) throw new Error('ไม่พบผู้ใช้');
 
-  // ที่เก็บไฟล์ใน Storage
-  const filePath = `avatar/${user.uid}_${file.name}`;
-  const storageRef = ref(this.fireStorage, filePath);
+    // ที่เก็บไฟล์ใน Storage
+    const filePath = `avatar/${user.uid}_${file.name}`;
+    const storageRef = ref(this.fireStorage, filePath);
 
-  // อัปโหลด
-  const snapshot = await uploadBytes(storageRef, file);
+    // อัปโหลด
+    const snapshot = await uploadBytes(storageRef, file);
 
-  // เอา URL มาใช้
-  const downloadURL = await getDownloadURL(snapshot.ref);
+    // เอา URL มาใช้
+    const downloadURL = await getDownloadURL(snapshot.ref);
 
-  // update Firestore ด้วย URL
-  const userDocRef = doc(this.fireStore, 'users', user.uid);
-  await updateDoc(userDocRef, { profileUrl: downloadURL });
+    // update Firestore ด้วย URL
+    const userDocRef = doc(this.fireStore, 'users', user.uid);
+    await updateDoc(userDocRef, { profileUrl: downloadURL });
 
-  return downloadURL;
-}
+    return downloadURL;
+  }
 }

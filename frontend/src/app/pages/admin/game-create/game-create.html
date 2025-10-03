@@ -1,6 +1,10 @@
 <app-admin-header name="หน้าจัดการเกม"></app-admin-header>
 
-<form class="p-5" [formGroup]="createGameGroup" (ngSubmit)="onCreateGameSubmit()">
+<form
+  class="p-5"
+  [formGroup]="createGameGroup"
+  (ngSubmit)="onCreateGameSubmit()"
+>
   <div class="w-full flex shadow-2xl p-5 rounded-2xl">
     <div class="w-[60%] p-6">
       <div class="mb-3">

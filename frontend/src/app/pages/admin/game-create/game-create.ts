@@ -24,9 +24,9 @@ export class GameCreate {
     name: this.fb.control('', [Validators.required]),
     type: this.fb.control('', [Validators.required]),
     description: this.fb.control('', [Validators.required]),
-    price: this.fb.control<number|null>(null, [Validators.required]),
+    price: this.fb.control<number | null>(null, [Validators.required]),
     coverImage: this.fb.control<File | null>(null, [Validators.required]),
-  })
+  });
 
   handleBackClick = () => {
     this.location.back();
@@ -73,7 +73,7 @@ export class GameCreate {
       swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: 'กรุณาตรวจสอบข้อมูลที่ต้องกรอกให้เรียบร้อย',
-        icon: 'error'
+        icon: 'error',
       });
       return;
     }

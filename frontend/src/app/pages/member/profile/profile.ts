@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   PenIcon,
   SaveIcon,
@@ -6,20 +6,19 @@ import {
   EyeClosedIcon,
   LucideAngularModule,
 } from 'lucide-angular';
-import Swal from 'sweetalert2';
 import { PasswordInput } from '../../../components/common/password-input/password-input';
 import { AuthService } from '../../../services/auth.service';
-import { AppUser } from '../../../types';
-import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import swal from '../../../utils/swal';
+import { Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
-  imports: [LucideAngularModule, PasswordInput, AsyncPipe, FormsModule],
+  imports: [LucideAngularModule, PasswordInput, FormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
-export class Profile implements OnInit {
+export class Profile implements OnInit, OnDestroy {
   readonly SaveIcon = SaveIcon;
   readonly PenIcon = PenIcon;
   readonly EyeOffIcon = EyeOffIcon;
@@ -36,11 +35,13 @@ export class Profile implements OnInit {
   selectedFile: File | null = null;
   user$ = this.authService.currentUser$;
 
-  oldPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
-  username: string = '';
-  email: string = '';
+  oldPassword = signal('');
+  newPassword = signal('');
+  confirmPassword = signal('');
+  username = signal('');
+  email = signal('');
+
+  destroy$ = new Subject<void>();
 
   handleEditClick = () => {
     this.isEditable.set(true);
@@ -53,56 +54,86 @@ export class Profile implements OnInit {
     }
     // ตรวจสอบข้อมูลก่อน
     if (!this.username || !this.email) {
-      Swal.fire('ผิดพลาด', 'กรุณากรอกชื่อผู้ใช้งานและอีเมล', 'error');
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'กรุณากรอกชื่อผู้ใช้งานและอีเมล',
+        icon: 'error',
+      });
       return;
     }
 
-    if (this.oldPassword || this.newPassword || this.confirmPassword) {
-      if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
-        Swal.fire('ผิดพลาด', 'กรุณากรอก รหัสผ่านเดิม, รหัสผ่านใหม่ และยืนยันรหัสผ่าน ให้ครบ', 'error');
+    if (this.oldPassword() || this.newPassword() || this.confirmPassword()) {
+      if (
+        !this.oldPassword() ||
+        !this.newPassword() ||
+        !this.confirmPassword()
+      ) {
+        swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+          icon: 'error',
+        });
         return;
       }
 
-      if (this.newPassword !== this.confirmPassword) {
-        Swal.fire('ผิดพลาด', 'รหัสผ่านใหม่ไม่ตรงกัน', 'error');
+      if (this.newPassword() !== this.confirmPassword()) {
+        swal.fire({
+          title: 'เกิดข้อผิดพลาด',
+          text: 'รหัสผ่านใหม่ไม่ตรงกัน',
+          icon: 'error',
+        });
         return;
       }
     }
 
     try {
       // อัปเดตโปรไฟล์
-      await this.authService.updateProfile(this.username, this.email);
+      await this.authService.updateProfile(this.username(), this.email());
       // เปลี่ยนรหัสผ่านถ้ามี
-      if (this.oldPassword && this.newPassword && this.confirmPassword) {
-        await this.authService.changePassword(this.oldPassword, this.newPassword);
+      if (this.oldPassword && this.newPassword && this.confirmPassword()) {
+        await this.authService.changePassword(
+          this.oldPassword(),
+          this.newPassword(),
+        );
       }
       // อัปโหลดรูปถ้ามี
       if (this.selectedFile) {
-        const url = await this.authService.updateProfileImage(this.selectedFile);
+        const url = await this.authService.updateProfileImage(
+          this.selectedFile,
+        );
         this.currentImage.set(url);
         this.previewImage.set(null);
         this.selectedFile = null;
       }
       // ถ้าผ่านทุกขั้นตอน ถึงขึ้นสำเร็จ
-      Swal.fire('สำเร็จ', 'อัปเดตข้อมูลเรียบร้อย', 'success');
+      swal.fire({
+        title: 'สำเร็จ',
+        text: 'อัปเดตข้อมูลเรียบร้อย',
+        icon: 'success',
+      });
       // เคลียร์ข้อมูลชั่วคราว
-      this.oldPassword = '';
-      this.newPassword = '';
-      this.confirmPassword = '';
+      this.oldPassword.set('');
+      this.newPassword.set('');
+      this.confirmPassword.set('');
       this.isEditable.set(false);
-    } catch (error: any) {
-      Swal.fire('ผิดพลาด', error.message || 'เกิดข้อผิดพลาด', 'error');
+    } catch {
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ไม่สามารถเปลี่ยนรหัสผ่านได้กรุณาลองใหม่ภายหลัง',
+        icon: 'error',
+      });
     }
   };
+
   undoProfile = () => {
     this.previewImage.set(null);
     this.selectedFile = null;
 
     // รีโหลดค่าจาก user$
-    this.user$.subscribe((user) => {
+    this.user$.pipe(take(1)).subscribe((user) => {
       if (user) {
-        this.username = user.username;
-        this.email = user.email;
+        this.username.set(user.username);
+        this.email.set(user.email);
         this.currentImage.set(user.profileUrl || '/profile.webp');
       }
     });
@@ -122,14 +153,19 @@ export class Profile implements OnInit {
 
     const allowedType = ['image/jpeg', 'image/png'];
     if (!allowedType.includes(file.type)) {
-      Swal.fire('ผิดพลาด', 'ระบบไม่รองรับไฟล์ประเภทนี้', 'error');
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ระบบไม่รองรับไฟล์ประเภทนี้',
+        icon: 'error',
+      });
       input.value = '';
       return;
     }
 
     this.previewImage.set(URL.createObjectURL(file));
     this.selectedFile = file;
-  };
+  }
+
   onImageSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0] || null;
@@ -142,30 +178,35 @@ export class Profile implements OnInit {
 
     const allowedType = ['image/jpeg', 'image/png'];
     if (!allowedType.includes(file.type)) {
-      Swal.fire('ผิดพลาด', 'ระบบไม่รองรับไฟล์ประเภทนี้', 'error');
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'ระบบไม่รองรับไฟล์ประเภทนี้',
+        icon: 'error',
+      });
       input.value = '';
       return;
     }
 
     this.previewImage.set(URL.createObjectURL(file)); // แค่ preview
-    this.selectedFile = file;                        // เก็บไฟล์รออัปโหลด
+    this.selectedFile = file; // เก็บไฟล์รออัปโหลด
   }
 
-  onImageError(event: Event) {
-    const img = event.target as HTMLImageElement;
-    img.src = '/profile.webp';
-    this.currentImage.set('/profile.webp');
+  onImageError() {
+    this.currentImage.set(null);
   }
 
   ngOnInit(): void {
-    this.currentImage.set('/profile.webp');
-    this.user$.subscribe((user) => {
+    this.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if (user) {
-        this.username = user.username;
-        this.email = user.email;
+        this.username.set(user.username);
+        this.email.set(user.email);
         this.currentImage.set(user.profileUrl || '/profile.webp');
       }
     });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

@@ -12,7 +12,7 @@
       </thead>
 
       <tbody>
-        @for (topup of userTopups$ | async ;track $index) {
+        @for (topup of userTopups$ | async; track $index) {
           <tr class="hover:bg-gray-100">
             <td>{{ $index + 1 }}</td>
             <td>{{ topup.amount }}</td>

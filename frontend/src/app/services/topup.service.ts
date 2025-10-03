@@ -22,6 +22,8 @@ export class TopupService {
   getUserTopup(id: string) {
     const ref = collection(this.fS, 'users', id, 'topups');
 
-    return collectionData(ref, { idField: 'id' }) as Observable<IUserTopupHistory[]>;
+    return collectionData(ref, { idField: 'id' }) as Observable<
+      IUserTopupHistory[]
+    >;
   }
 }
