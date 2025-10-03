@@ -166,31 +166,6 @@ export class Profile implements OnInit, OnDestroy {
     this.selectedFile = file;
   }
 
-  onImageSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] || null;
-
-    if (!file) {
-      this.previewImage.set(null);
-      this.selectedFile = null;
-      return;
-    }
-
-    const allowedType = ['image/jpeg', 'image/png'];
-    if (!allowedType.includes(file.type)) {
-      swal.fire({
-        title: 'เกิดข้อผิดพลาด',
-        text: 'ระบบไม่รองรับไฟล์ประเภทนี้',
-        icon: 'error',
-      });
-      input.value = '';
-      return;
-    }
-
-    this.previewImage.set(URL.createObjectURL(file)); // แค่ preview
-    this.selectedFile = file; // เก็บไฟล์รออัปโหลด
-  }
-
   onImageError() {
     this.currentImage.set(null);
   }

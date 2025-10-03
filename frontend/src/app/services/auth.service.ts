@@ -18,15 +18,7 @@ import {
   uploadBytes,
 } from '@angular/fire/storage';
 import { UserService } from './user.service';
-import {
-  BehaviorSubject,
-  Observable,
-  from,
-  switchMap,
-  map,
-  catchError,
-  of,
-} from 'rxjs';
+import { Observable, from, switchMap, map, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,9 +39,6 @@ export class AuthService {
       }
     }),
   );
-
-  private authInitialized = new BehaviorSubject<boolean>(false);
-  public authInitialized$ = this.authInitialized.asObservable();
 
   register(
     email: string,

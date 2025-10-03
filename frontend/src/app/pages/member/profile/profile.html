@@ -85,14 +85,6 @@
         alt="Profile"
         (error)="onImageError()"
       />
-
-      <input
-        *ngIf="isEditable()"
-        type="file"
-        class="file-input"
-        accept="image/jpeg, image/png"
-        (change)="onImageSelected($event)"
-      />
     </div>
     @if (isEditable()) {
       <div>
