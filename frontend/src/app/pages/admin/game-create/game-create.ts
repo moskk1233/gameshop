@@ -2,12 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { LucideAngularModule, SaveIcon } from 'lucide-angular';
 import { AdminHeader } from '../../../components/admin/admin-header/admin-header';
 import { Location } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import swal from '../../../utils/swal';
 
 @Component({
   selector: 'app-game-create',
-  imports: [AdminHeader, LucideAngularModule, FormsModule],
+  imports: [AdminHeader, LucideAngularModule, ReactiveFormsModule],
   templateUrl: './game-create.html',
   styleUrl: './game-create.css',
 })
@@ -15,15 +16,17 @@ export class GameCreate {
   readonly SaveIcon = SaveIcon;
 
   location = inject(Location);
+  fb = inject(FormBuilder);
 
   previewImage = signal<string | null>(null);
 
-  newGame = signal({
-    name: '',
-    type: '',
-    price: 0,
-    description: '',
-  });
+  createGameGroup = this.fb.group({
+    name: this.fb.control('', [Validators.required]),
+    type: this.fb.control('', [Validators.required]),
+    description: this.fb.control('', [Validators.required]),
+    price: this.fb.control<number|null>(null, [Validators.required]),
+    coverImage: this.fb.control<File | null>(null, [Validators.required]),
+  })
 
   handleBackClick = () => {
     this.location.back();
@@ -33,7 +36,11 @@ export class GameCreate {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
-    if (!file) return;
+    if (!file) {
+      this.previewImage.set(null);
+      this.createGameGroup.controls.coverImage.setValue(null);
+      return;
+    }
 
     const allowedType = ['image/jpeg', 'image/png'];
 
@@ -44,8 +51,13 @@ export class GameCreate {
         icon: 'error',
       });
       input.value = '';
+      this.previewImage.set(null);
+      this.createGameGroup.controls.coverImage.setValue(null);
       return;
     }
+
+    this.createGameGroup.controls.coverImage.setValue(file);
+    this.createGameGroup.controls.coverImage.markAsTouched();
 
     const reader = new FileReader();
 
@@ -55,4 +67,15 @@ export class GameCreate {
 
     reader.readAsDataURL(file);
   };
+
+  onCreateGameSubmit() {
+    if (this.createGameGroup.invalid) {
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: 'กรุณาตรวจสอบข้อมูลที่ต้องกรอกให้เรียบร้อย',
+        icon: 'error'
+      });
+      return;
+    }
+  }
 }

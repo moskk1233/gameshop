@@ -1,6 +1,6 @@
 <app-admin-header name="หน้าจัดการเกม"></app-admin-header>
 
-<div class="p-5">
+<form class="p-5" [formGroup]="createGameGroup" (ngSubmit)="onCreateGameSubmit()">
   <div class="w-full flex shadow-2xl p-5 rounded-2xl">
     <div class="w-[60%] p-6">
       <div class="mb-3">
@@ -10,10 +10,9 @@
             type="text"
             class="input w-full"
             placeholder="กรอกชื่อเกม"
-            [(ngModel)]="newGame().name"
+            formControlName="name"
           />
         </fieldset>
-        {{ newGame().name }}
       </div>
       <div class="mb-3 flex gap-5 w-full">
         <div class="w-full">
@@ -34,7 +33,7 @@
               min="0"
               class="input w-full"
               placeholder="กรอกราคาเกม"
-              [(ngModel)]="newGame().price"
+              formControlName="price"
             />
           </fieldset>
         </div>
@@ -45,7 +44,7 @@
           <textarea
             class="textarea w-full"
             placeholder="กรอกรายละเอียดของตัวเกม"
-            [(ngModel)]="newGame().description"
+            formControlName="description"
           ></textarea>
         </fieldset>
       </div>
@@ -83,4 +82,4 @@
       </div>
     </div>
   </div>
-</div>
+</form>

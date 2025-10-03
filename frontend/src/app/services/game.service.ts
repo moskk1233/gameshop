@@ -1,11 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Game } from '../types';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { getDownloadURL, ref, Storage, uploadBytes } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
+  fS = inject(Firestore);
+  fStorage = inject(Storage);
+
   games: Game[] = [
     {
       id: 1,
@@ -221,5 +226,35 @@ export class GameService {
   getTrendingGames(): Observable<Game[]> {
     const games = [...this.games].sort((a, b) => b.sold - a.sold);
     return of(games.slice(0, 10));
+  }
+
+  async createGame(name: string, type: string, description: string, price: number, image: File) {
+    try {
+      const filePath = `game_image/${image.name}`;
+      const storageRef = ref(this.fStorage, filePath);
+
+      const snapshot = await uploadBytes(storageRef, image);
+      const imageUrl = await getDownloadURL(snapshot.ref);
+      const collectionRef = collection(this.fS, 'games');
+
+      await addDoc(collectionRef, {
+        name,
+        type,
+        description,
+        price,
+        sold: 0,
+        coverImage: imageUrl
+      } as Game);
+
+      return {
+        success: true,
+        message: 'วางขายเกมสำเร็จ'
+      }
+    } catch {
+      return {
+        success: false,
+        message: 'ไม่สามารถวางขายเกมได้กรุณาลองใหม่อีกครั้ง'
+      };
+    }
   }
 }
