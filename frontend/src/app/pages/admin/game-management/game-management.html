@@ -14,11 +14,11 @@
     </div>
 
     <div class="flex flex-wrap gap-5 justify-center">
-      @for (game of gameService.getGames() | async; track game.id) {
+      @for (game of games$ | async; track game.id) {
         <div class="shrink-0 grow-0 w-32">
-          <a [routerLink]="['/admin/game-management', 1]">
+          <a [routerLink]="['/admin/game-management', game.id]">
             <app-game-management-card
-              id="1"
+              [id]="game.id"
               gameTitle="Delta Force"
               thumbnail="/game.jpg"
             ></app-game-management-card>

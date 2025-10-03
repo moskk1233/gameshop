@@ -22,11 +22,12 @@
         <div class="w-full">
           <fieldset class="fieldset">
             <legend class="fieldset-legend">ประเภท</legend>
-            <input
-              type="text"
-              class="input w-full"
-              placeholder="เลือกประเภทของเกม"
-            />
+            <select name="" class="select" formControlName="type">
+              <option value="" selected disabled>กรุณาเลือกประเภทเกม</option>
+              @for (category of gameCategory$ | async; track category.id) {
+                <option [value]="category.name">{{ category.name }}</option>
+              }
+            </select>
           </fieldset>
         </div>
         <div class="w-full">

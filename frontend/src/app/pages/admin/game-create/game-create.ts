@@ -1,14 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { LucideAngularModule, SaveIcon } from 'lucide-angular';
 import { AdminHeader } from '../../../components/admin/admin-header/admin-header';
-import { Location } from '@angular/common';
+import { AsyncPipe, Location } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import swal from '../../../utils/swal';
+import { GameCategoryService } from '../../../services/game-category.service';
+import { GameService } from '../../../services/game.service';
 
 @Component({
   selector: 'app-game-create',
-  imports: [AdminHeader, LucideAngularModule, ReactiveFormsModule],
+  imports: [AdminHeader, LucideAngularModule, ReactiveFormsModule, AsyncPipe],
   templateUrl: './game-create.html',
   styleUrl: './game-create.css',
 })
@@ -17,8 +19,12 @@ export class GameCreate {
 
   location = inject(Location);
   fb = inject(FormBuilder);
+  gameCategoryService = inject(GameCategoryService);
+  gameService = inject(GameService);
 
   previewImage = signal<string | null>(null);
+
+  gameCategory$ = this.gameCategoryService.getCategories();
 
   createGameGroup = this.fb.group({
     name: this.fb.control('', [Validators.required]),
@@ -68,7 +74,7 @@ export class GameCreate {
     reader.readAsDataURL(file);
   };
 
-  onCreateGameSubmit() {
+  async onCreateGameSubmit() {
     if (this.createGameGroup.invalid) {
       swal.fire({
         title: 'เกิดข้อผิดพลาด',
@@ -76,6 +82,30 @@ export class GameCreate {
         icon: 'error',
       });
       return;
+    }
+
+    const formValue = this.createGameGroup.getRawValue();
+
+    const response = await this.gameService.createGame(
+      formValue.name!,
+      formValue.type!,
+      formValue.description!,
+      formValue.price!,
+      formValue.coverImage!,
+    );
+
+    if (response.success) {
+      swal.fire({
+        title: 'สำเร็จ',
+        text: response.message,
+        icon: 'success',
+      });
+    } else {
+      swal.fire({
+        title: 'เกิดข้อผิดพลาด',
+        text: response.message,
+        icon: 'error',
+      });
     }
   }
 }

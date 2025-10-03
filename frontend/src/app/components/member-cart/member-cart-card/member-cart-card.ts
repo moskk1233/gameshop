@@ -18,7 +18,7 @@ export class MemberCartCard {
 
   game = input.required<Omit<Game, 'sold'>>();
 
-  deleted = output<number>();
+  deleted = output<string>();
 
   onDeleted = () => {
     this.deleted.emit(this.game().id);

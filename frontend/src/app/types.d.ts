@@ -1,13 +1,14 @@
 import { Timestamp } from '@angular/fire/firestore';
 
 export interface Game {
-  id: number;
+  id: string;
   name: string;
   type: string;
   description: string;
   price: number;
   coverImage: string;
   sold: number;
+  createdAt: Date;
 }
 
 export interface GameCategory {

@@ -16,7 +16,7 @@ export class MemberCart {
 
   cartService = inject(CartService);
 
-  onDeleteCartItem(id: number) {
+  onDeleteCartItem(id: string) {
     this.cartService.removeItem(id);
   }
 }
