@@ -2,11 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import {
   Auth,
   authState,
+  reauthenticateWithCredential,
+  updatePassword,
+  updateEmail,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
+  EmailAuthProvider,
 } from '@angular/fire/auth';
-import { doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { doc, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {
   getDownloadURL,
   ref,
@@ -43,7 +47,7 @@ export class AuthService {
       }
     }),
   );
-
+  constructor(private auth: Auth) {}
   private authInitialized = new BehaviorSubject<boolean>(false);
   public authInitialized$ = this.authInitialized.asObservable();
 
@@ -104,4 +108,45 @@ export class AuthService {
   logout(): Observable<void> {
     return from(this.fireAuth.signOut());
   }
+  
+  async changePassword(oldPassword: string, newPassword: string) {
+    const user = this.auth.currentUser;
+    if (!user || !user.email) throw new Error('User not found');
+
+    const credential = EmailAuthProvider.credential(user.email, oldPassword);
+    await reauthenticateWithCredential(user, credential);
+    await updatePassword(user, newPassword);
+  }
+
+  async updateProfile(username: string, email: string) {
+  const user = this.auth.currentUser;
+  if (!user) throw new Error('ไม่พบผู้ใช้');
+
+  if (email && user.email !== email) {
+    await updateEmail(user, email);
+  }
+  const userDocRef = doc(this.fireStore, 'users', user.uid);
+  await updateDoc(userDocRef, { username, email });
+}
+
+async updateProfileImage(file: File): Promise<string> {
+  const user = this.auth.currentUser;
+  if (!user) throw new Error('ไม่พบผู้ใช้');
+
+  // ที่เก็บไฟล์ใน Storage
+  const filePath = `avatar/${user.uid}_${file.name}`;
+  const storageRef = ref(this.fireStorage, filePath);
+
+  // อัปโหลด
+  const snapshot = await uploadBytes(storageRef, file);
+
+  // เอา URL มาใช้
+  const downloadURL = await getDownloadURL(snapshot.ref);
+
+  // update Firestore ด้วย URL
+  const userDocRef = doc(this.fireStore, 'users', user.uid);
+  await updateDoc(userDocRef, { profileUrl: downloadURL });
+
+  return downloadURL;
+}
 }
