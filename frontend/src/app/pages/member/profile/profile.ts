@@ -11,10 +11,11 @@ import { PasswordInput } from '../../../components/common/password-input/passwor
 import { AuthService } from '../../../services/auth.service';
 import { AppUser } from '../../../types';
 import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
-  imports: [LucideAngularModule, PasswordInput, AsyncPipe],
+  imports: [LucideAngularModule, PasswordInput, AsyncPipe, FormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -35,18 +36,49 @@ export class Profile implements OnInit {
 
   user$ = this.authService.currentUser$;
 
+  oldPassword: string = '';
+  newPassword: string = '';
+  confirmPassword: string = '';
+  username: string = '';
+  email: string = '';
+
   handleEditClick = () => {
     this.isEditable.set(true);
   };
 
-  handleSaveClick = () => {
+  handleSaveClick = async () => {
+  if (this.isEditable()) {
+    try {
+      if (!this.username || !this.email) {
+        Swal.fire('ผิดพลาด', 'กรุณากรอกชื่อผู้ใช้งานและอีเมล', 'error');
+        return;
+      }
+
+      await this.authService.updateProfile(this.username, this.email);
+
+     
+      if (this.oldPassword && this.newPassword && this.confirmPassword) {
+        if (this.newPassword !== this.confirmPassword) {
+          Swal.fire('ผิดพลาด', 'รหัสผ่านใหม่ไม่ตรงกัน', 'error');
+          return;
+        }
+        await this.authService.changePassword(this.oldPassword, this.newPassword);
+      }
+
+      Swal.fire('สำเร็จ', 'อัปเดตข้อมูลเรียบร้อย', 'success');
+      this.isEditable.set(false);
+
+      this.oldPassword = '';
+      this.newPassword = '';
+      this.confirmPassword = '';
+    } catch (error: any) {
+      Swal.fire('ผิดพลาด', error.message, 'error');
+    }
+  } else {
     this.isEditable.set(false);
-    Swal.fire({
-      title: 'สำเร็จ',
-      text: 'แก้ไขข้อมูลสำเร็จ',
-      icon: 'success',
-    });
-  };
+    Swal.fire('สำเร็จ', 'แก้ไขข้อมูลสำเร็จ', 'success');
+  }
+};
 
   onImageAttachmentChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
@@ -80,5 +112,12 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {
     this.currentImage.set('/profile.webp');
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.username = user.username;
+        this.email = user.email;
+      }
+    });
   }
+
 }
