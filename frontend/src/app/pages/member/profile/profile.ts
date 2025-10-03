@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   PenIcon,
   SaveIcon,
@@ -8,10 +8,13 @@ import {
 } from 'lucide-angular';
 import Swal from 'sweetalert2';
 import { PasswordInput } from '../../../components/common/password-input/password-input';
+import { AuthService } from '../../../services/auth.service';
+import { AppUser } from '../../../types';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
-  imports: [LucideAngularModule, PasswordInput],
+  imports: [LucideAngularModule, PasswordInput, AsyncPipe],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -21,14 +24,16 @@ export class Profile implements OnInit {
   readonly EyeOffIcon = EyeOffIcon;
   readonly EyeClosedIcon = EyeClosedIcon;
 
-  isEditable = signal(false);
+  authService = inject(AuthService);
 
+  isEditable = signal(false);
   isOldPasswordShow = signal(false);
   isPasswordShow = signal(false);
   isPasswordConfirmShow = signal(false);
-
   currentImage = signal<string | null>(null);
   previewImage = signal<string | null>(null);
+
+  user$ = this.authService.currentUser$;
 
   handleEditClick = () => {
     this.isEditable.set(true);
