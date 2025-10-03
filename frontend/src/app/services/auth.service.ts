@@ -128,4 +128,25 @@ export class AuthService {
   const userDocRef = doc(this.fireStore, 'users', user.uid);
   await updateDoc(userDocRef, { username, email });
 }
+
+async updateProfileImage(file: File): Promise<string> {
+  const user = this.auth.currentUser;
+  if (!user) throw new Error('ไม่พบผู้ใช้');
+
+  // ที่เก็บไฟล์ใน Storage
+  const filePath = `avatar/${user.uid}_${file.name}`;
+  const storageRef = ref(this.fireStorage, filePath);
+
+  // อัปโหลด
+  const snapshot = await uploadBytes(storageRef, file);
+
+  // เอา URL มาใช้
+  const downloadURL = await getDownloadURL(snapshot.ref);
+
+  // update Firestore ด้วย URL
+  const userDocRef = doc(this.fireStore, 'users', user.uid);
+  await updateDoc(userDocRef, { profileUrl: downloadURL });
+
+  return downloadURL;
+}
 }
