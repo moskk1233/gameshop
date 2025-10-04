@@ -125,6 +125,20 @@ export const routes: Routes = [
             (m) => m.CouponManagement,
           ),
       },
+      {
+        path: 'topup-history',
+        loadComponent: () =>
+          import('./pages/admin/user-topup-history/user-topup-history').then(
+            (m) => m.UserTopupHistory
+          )
+      },
+      {
+        path: 'topup-history/:uid',
+        loadComponent: () =>
+          import('./pages/admin/user-topup-history-each/user-topup-history-each').then(
+            (m) => m.UserTopupHistoryEach
+          )
+      }
     ],
   },
 ];

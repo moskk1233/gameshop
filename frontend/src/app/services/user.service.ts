@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import {
   collection,
+  collectionData,
   doc,
   docData,
   Firestore,
@@ -15,6 +16,12 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   fireStore = inject(Firestore);
+
+  getUsers() {
+    const ref = collection(this.fireStore, 'users');
+
+    return collectionData(ref, { idField: 'id' }) as Observable<AppUser[]>;
+  }
 
   getProfile(uid: string): Observable<AppUser | null> {
     const ref = doc(this.fireStore, 'users', uid);

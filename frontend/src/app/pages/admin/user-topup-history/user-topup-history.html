@@ -1,0 +1,31 @@
+<app-admin-header name="หน้าประวัติการเติมเงิน" />
+
+<div class="p-5 w-full">
+  <div
+    class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+  >
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ชื่อผู้ใช้งาน</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of users$ | async; track user.id) {
+          <tr class="hover:bg-gray-100 hover:cursor-pointer" [routerLink]="['/admin/topup-history', user.id]">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ user.username }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="3" class="text-center">
+              <span class="text-2xl font-bold">ยังไม่มีข้อมูลการเติมเงิน</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

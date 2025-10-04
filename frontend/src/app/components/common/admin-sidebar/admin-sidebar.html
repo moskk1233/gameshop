@@ -69,6 +69,18 @@
           </li>
         </button>
 
+        <button routerLink="/admin/topup-history" class="w-full">
+          <li
+            routerLinkActive="bg-gray-900"
+            class="relative p-3 mx-2.5 hover:bg-gray-700 rounded flex items-center gap-2 cursor-pointer"
+          >
+            <lucide-icon [img]="ScanBarcodeIcon"></lucide-icon>
+            <span class="transition-opacity text-nowrap">
+              ประวัติการเติมเงิน
+            </span>
+          </li>
+        </button>
+
         <hr class="m-3" />
 
         <button class="w-full mt-2" (click)="handleLogout()">

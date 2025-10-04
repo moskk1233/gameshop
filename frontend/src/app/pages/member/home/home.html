@@ -1,7 +1,7 @@
 <div>
   <section>
     <app-trending-game>
-      @for (game of gameService.getTrendingGames() | async; track $index) {
+      @for (game of trendingGames$ | async; track game.id) {
         <div class="w-40 shrink-0">
           <app-game-card
             [gameTitle]="game.name"
@@ -46,7 +46,7 @@
 
       <div class="shadow p-5">
         <div class="flex justify-center flex-wrap gap-5 px-10">
-          @for (game of gameService.getGames() | async; track $index) {
+          @for (game of games$ | async; track game.id) {
             <div class="w-32">
               <app-game-card
                 [gameTitle]="game.name"
