@@ -1,7 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Game } from '../types';
-import { addDoc, collection, collectionData, doc, docData, Firestore, limit, orderBy, query } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  doc,
+  docData,
+  Firestore,
+  limit,
+  orderBy,
+  query,
+} from '@angular/fire/firestore';
 import {
   getDownloadURL,
   ref,
@@ -30,11 +40,7 @@ export class GameService {
 
   getTrendingGames(): Observable<Game[]> {
     const ref = collection(this.fS, 'games');
-    const q = query(
-      ref,
-      orderBy('sold', 'desc'),
-      limit(10)
-    );
+    const q = query(ref, orderBy('sold', 'desc'), limit(10));
 
     return collectionData(q, { idField: 'id' }) as Observable<Game[]>;
   }

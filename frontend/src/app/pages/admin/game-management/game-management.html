@@ -10,7 +10,12 @@
 
   <div class="flex flex-col bg-white shadow-2xl p-10 rounded-2xl">
     <div class="flex mb-10">
-      <input type="text" class="input" placeholder="ค้นหาชื่อเกม" />
+      <input
+        type="text"
+        class="input"
+        placeholder="ค้นหาชื่อเกม"
+        [formControl]="searchControl"
+      />
     </div>
 
     <div class="flex flex-wrap gap-5 justify-center">
@@ -19,8 +24,8 @@
           <a [routerLink]="['/admin/game-management', game.id]">
             <app-game-management-card
               [id]="game.id"
-              gameTitle="Delta Force"
-              thumbnail="/game.jpg"
+              [gameTitle]="game.name"
+              [thumbnail]="game.coverImage"
             ></app-game-management-card>
           </a>
         </div>

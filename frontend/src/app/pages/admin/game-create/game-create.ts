@@ -95,13 +95,14 @@ export class GameCreate {
     );
 
     if (response.success) {
-      swal.fire({
+      await swal.fire({
         title: 'สำเร็จ',
         text: response.message,
         icon: 'success',
       });
+      this.location.back();
     } else {
-      swal.fire({
+      await swal.fire({
         title: 'เกิดข้อผิดพลาด',
         text: response.message,
         icon: 'error',
