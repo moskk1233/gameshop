@@ -10,6 +10,7 @@ import {
   distinctUntilChanged,
   map,
   Observable,
+  shareReplay,
   startWith,
   switchMap,
 } from 'rxjs';
@@ -39,7 +40,7 @@ export class GameManagement implements OnInit {
   searchControl = this.fb.control('');
 
   ngOnInit(): void {
-    const allGames$ = this.gameService.getGames();
+    const allGames$ = this.gameService.getGames().pipe(shareReplay(1));
 
     this.games$ = this.searchControl.valueChanges.pipe(
       startWith(''), // ตอนแรกให้แสดงทั้งหมด
